@@ -4,10 +4,11 @@
   "description": "null",
   "main": "bundle.js",
   "scripts": {
+    "start": "node bundle",
     "build": "npm run build-js &",
     "watch": "npm run watch-js &",
-    "build-js": "browserify -t babelify src/main.js | uglifyjs -mc > bundle.js",
-    "watch-js": "watchify -t babelify src/main.js -d -v -o bundle.js",
+    "build-js": "browserify -t babelify src/main.js | uglifyjs -mc -o bundle.js",
+    "watch-js": "watchify -d -t babelify src/main.js -v -o bundle.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Shashank Gupta",
