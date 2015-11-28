@@ -1,0 +1,20 @@
+{
+  "name": "ttt",
+  "version": "1.0.0",
+  "description": "null",
+  "main": "bundle.js",
+  "scripts": {
+    "build": "npm run build-js &",
+    "watch": "npm run watch-js &",
+    "build-js": "browserify -t babelify src/main.js | uglifyjs -mc > bundle.js",
+    "watch-js": "watchify -t babelify src/main.js -d -v -o bundle.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shashank Gupta",
+  "license": "MIT",
+  "repository": "null",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.1.18",
+    "babelify": "^7.2.0"
+  }
+}
