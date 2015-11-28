@@ -6,15 +6,16 @@ export default class AI {
     markRandom(mark, grid) {
         let freeSpaces = this.findFreeSpaces(grid)
         let randomChoice = Math.floor(Math.random() * freeSpaces.length)
-        this.markSpace(mark, grid, freeSpaces[randomChoice])
+        return this.markSpace(mark, grid, freeSpaces[randomChoice])
     }
 
     markBest(mark, grid) {
         let opponentMark = mark === X ? O : X
-        let freeSpaces = findFreeSpaces(grid)
+        let freeSpaces = this.findFreeSpaces(grid)
         let children = freeSpaces.map((index) => {
 
         })
+        return this.markRandom(mark, grid)
     }
 
     findFreeSpaces(grid) {
@@ -27,11 +28,11 @@ export default class AI {
 
     markSpace(mark, grid, index) {
         if (grid[index] === FREE_SPACE) {
-            this.grid = grid.substr(0, index)
-                        + mark
-                        + grid.substr(index + 1)
+            return  grid.substr(0, index)
+                    + mark
+                    + grid.substr(index + 1)
         } else {
-            throw new Error('The space is already marked.')
+            throw new Error('The AI is attempting to mark a marked space.')
         }
     }
 

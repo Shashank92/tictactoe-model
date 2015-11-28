@@ -21,7 +21,7 @@ export default class TicTacToe {
     }
 
     yieldToAI() {
-        this.aiChooseAndMark(this.aiMark, this.grid)
+        this.grid = this.aiChooseAndMark(this.aiMark, this.grid)
     }
 
     markSpace(index) {
@@ -31,7 +31,7 @@ export default class TicTacToe {
                         + this.playerMark 
                         + grid.substr(index + 1)
         } else {
-            throw new Error('The space is already marked.')
+            throw new Error('The space is either already marked or is not valid.')
         }
     }
 
