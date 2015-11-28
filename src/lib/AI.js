@@ -10,11 +10,15 @@ export default class AI {
     }
 
     markBest(mark, grid) {
+        let opponentMark = mark === X ? O : X
+        let freeSpaces = findFreeSpaces(grid)
+        let children = freeSpaces.map((index) => {
 
+        })
     }
 
     findFreeSpaces(grid) {
-        return grid.reduce((freeSpaces, space, index) => {
+        return Array.from(grid).reduce((freeSpaces, space, index) => {
             if (space === FREE_SPACE)
                 freeSpaces.push(index)
             return freeSpaces
@@ -22,10 +26,13 @@ export default class AI {
     }
 
     markSpace(mark, grid, index) {
-        if (grid[index] === FREE_SPACE)
-            grid[index] = mark
-        else
-            throw new Error('The AI is attempting to mark an occupied space.')
+        if (grid[index] === FREE_SPACE) {
+            this.grid = grid.substr(0, index)
+                        + mark
+                        + grid.substr(index + 1)
+        } else {
+            throw new Error('The space is already marked.')
+        }
     }
 
 }

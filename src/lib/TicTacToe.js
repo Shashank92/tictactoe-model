@@ -8,13 +8,14 @@ export default class TicTacToe {
     }
 
     startNewGame(difficulty, playerMark) {
-        this.aiChooseAndMark = (!difficulty || difficulty === 'easy'
-                                    ? this.ai.markRandom
-                                    : this.ai.markBest
-                                ).bind(this.ai)
+        this.aiChooseAndMark = (
+            !difficulty || difficulty === 'easy'
+            ? this.ai.markRandom
+            : this.ai.markBest
+        ).bind(this.ai)
         this.playerMark = playerMark || X
         this.aiMark = this.playerMark === X ? O : X
-        this.grid = new Array(9).fill(FREE_SPACE)
+        this.grid = Array(9).fill(FREE_SPACE).join('')
         if (this.aiMark === X)
             this.yieldToAI()
     }
@@ -24,16 +25,22 @@ export default class TicTacToe {
     }
 
     markSpace(index) {
-        if (this.grid[index] === FREE_SPACE)
-            this.grid[index] = this.playerMark
-        else
+        let grid = this.grid
+        if (grid[index] === FREE_SPACE) {
+            this.grid = grid.substr(0, index)
+                        + this.playerMark 
+                        + grid.substr(index + 1)
+        } else {
             throw new Error('The space is already marked.')
+        }
     }
 
     logGridToConsole() {
-        if (this.grid) {
-            console.log(Array.from({length: 3}, (v, k) => k * 3)
-                .map(i => this.grid.slice(i, i + 3).join('|'))
+        let grid = this.grid
+        if (grid) {
+            console.log(
+                Array.from({length: 3}, (v, k) => k * 3)
+                .map(i => Array.from(grid.substr(i, 3)).join('|'))
                 .join('\n-----\n')
             )
         } else {
