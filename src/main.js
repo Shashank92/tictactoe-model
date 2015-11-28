@@ -1,8 +1,8 @@
 import TicTacToe from './lib/TicTacToe'
 import AI from './lib/AI'
 
-const ttt = new TicTacToe(new AI())
-if (global)
-  global.ttt = ttt
-else if (window)
-  window.ttt = ttt
+(   typeof global ===  'object' ? global :
+    typeof window === 'object' ? window :
+    typeof self === 'object' ? self :
+    typeof this === 'object' ? this : {}
+).ttt = new TicTacToe(new AI());
