@@ -16,7 +16,7 @@ export default class AI {
     findFreeSpaces(grid) {
         return grid.reduce((freeSpaces, space, index) => {
             if (space === FREE_SPACE)
-            freeSpaces.push(index)
+                freeSpaces.push(index)
             return freeSpaces
         }, [])
     }
