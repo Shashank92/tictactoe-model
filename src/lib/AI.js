@@ -12,6 +12,10 @@ export default class AI {
     markBest(mark, grid) {
         let opponentMark = mark === X ? O : X
         let freeSpaces = this.findFreeSpaces(grid)
+        // check for AI win.
+        let myQueue = [];
+        // check for player win.
+        let opponentsQueue = [];
         let children = freeSpaces.map((index) => {
 
         })
