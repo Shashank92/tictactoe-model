@@ -1,5 +1,5 @@
 import {FREE_SPACE, X, O} from './constants'
-import detectWinner from './detectWinner'
+import detectWin from './detectWinner'
 
 export default class AI {
 
@@ -13,9 +13,9 @@ export default class AI {
         let opponentMark = mark === X ? O : X
         let freeSpaces = this.findFreeSpaces(grid)
         // check for AI win.
-        let myQueue = [];
+        let myQueue = []
         // check for player win.
-        let opponentsQueue = [];
+        let opponentsQueue = []
         let children = freeSpaces.map((index) => {
 
         })

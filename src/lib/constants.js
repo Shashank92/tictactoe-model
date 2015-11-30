@@ -1,6 +1,6 @@
 export const FREE_SPACE = ' '
-export const X = 'X'
-export const O = 'O'
+export const X = 'x'
+export const O = 'o'
 export const ROWS = [
     [0, 1, 2],
     [3, 4, 5],

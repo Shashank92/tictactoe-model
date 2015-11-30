@@ -1,5 +1,5 @@
 import {FREE_SPACE, X, O} from './constants'
-import detectWinner from './detectWinner'
+import detectWin from './detectWinner'
 
 export default class TicTacToe {
 
@@ -48,8 +48,8 @@ export default class TicTacToe {
         }
     }
 
-    detectWinner() {
-        return detectWinner(this.grid)
+    detectWin(mark) {
+        return detectWin(mark, this.grid)
     }
 
 }

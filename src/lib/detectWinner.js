@@ -1,15 +1,6 @@
-import {X, O, ROWS} from './constants'
+import {ROWS} from './constants'
 
-export default function detectWinner(grid) {
-    let winner
-    let markedByX = index => grid[index] === X
-    let markedByO = index => grid[index] === O
-    ROWS.some((row) => {
-        if (row.every(markedByX))
-            winner = X
-        else if (row.every(markedByO))
-            winner = O
-        return winner
-    })
-    return winner
+export default function detectWin(mark, grid) {
+    let marked = index => grid[index] === mark
+    return ROWS.some(row => row.every(marked))
 }
