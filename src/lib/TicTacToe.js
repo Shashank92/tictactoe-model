@@ -1,5 +1,5 @@
 import {FREE_SPACE, X, O} from './constants'
-import detectWin from './detectWinner'
+import detectWin from './detect'
 
 export default class TicTacToe {
 
@@ -38,6 +38,7 @@ export default class TicTacToe {
     logGridToConsole() {
         let grid = this.grid
         if (grid) {
+            grid = grid.replace(/f/g, ' ').toUpperCase()
             console.log(
                 Array.from({length: 3}, (v, k) => k * 3)
                 .map(i => Array.from(grid.substr(i, 3)).join('|'))

@@ -1,4 +1,4 @@
-export const FREE_SPACE = ' '
+export const FREE_SPACE = 'f'
 export const X = 'x'
 export const O = 'o'
 export const ROWS = [
@@ -11,3 +11,12 @@ export const ROWS = [
     [0, 4, 8],
     [2, 4, 6]
 ]
+export const SIDES = [1, 3, 5, 7]
+export const CORNERS = [0, 2, 6, 8]
+export const CENTER = 4
+export const OPPOSITE_CORNER = {
+    0: 8,
+    2: 6,
+    6: 2,
+    8: 0
+}

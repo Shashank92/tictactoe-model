@@ -9,4 +9,4 @@ let ttt = new TicTacToe(new AI())
     typeof this === 'object' ? this : {}
 ).ttt = ttt
 
-export default ttt
+module.exports = ttt
