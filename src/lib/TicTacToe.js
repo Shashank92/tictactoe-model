@@ -11,16 +11,14 @@ TicTacToe.prototype.startNewGame = function(playerMark, difficulty) {
     var FREE_SPACE = constants.FREE_SPACE
     var X = constants.X
     var O = constants.O
+    this.playerMark = playerMark || X
+    this.aiMark = this.playerMark === X ? O : X
+    this.grid = Array(9).fill(FREE_SPACE).join('')
     this.aiApplyStrategy = (
         !difficulty || difficulty === 'easy'
         ? this.ai.markRandom
         : this.ai.markBest
     ).bind(this.ai)
-    this.playerMark = playerMark || X
-    this.aiMark = this.playerMark === X ? O : X
-    this.grid = Array(9).fill(FREE_SPACE).join('')
-    if (this.aiMark === X)
-        this.yieldToAI()
 }
 
 TicTacToe.prototype.yieldToAI = function() {
