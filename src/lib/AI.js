@@ -1,7 +1,8 @@
-import {FREE_SPACE, X, O} from './constants'
-import {detectFreeSpaces, detectWin, detectTwoInARow} from './detect'
+var constants = require('./constants')
+var D = require('./detect')
 
 function markSpace(mark, grid, index) {
+    var FREE_SPACE = constants.FREE_SPACE
     if (grid[index] === FREE_SPACE) {
         return  grid.substr(0, index)
                 + mark
@@ -11,16 +12,16 @@ function markSpace(mark, grid, index) {
     }
 }
 
-export default class AI {
+function AI() {}
 
-    markRandom(mark, grid) {
-        let freeSpaces = detectFreeSpaces(grid)
-        let randomChoice = Math.floor(Math.random() * freeSpaces.length)
-        return markSpace(mark, grid, freeSpaces[randomChoice])
-    }
-
-    markBest(mark, grid) {
-        return this.markRandom(mark, grid)
-    }
-
+AI.prototype.markRandom = function(mark, grid) {
+    var freeSpaces = D.detectFreeSpaces(grid)
+    var randomChoice = Math.floor(Math.random() * freeSpaces.length)
+    return markSpace(mark, grid, freeSpaces[randomChoice])
 }
+
+AI.prototype.markBest = function(mark, grid) {
+    return this.markRandom(mark, grid)
+}
+
+module.exports = AI

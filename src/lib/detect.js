@@ -1,13 +1,14 @@
-import * as constants from './constants'
+var constants = require('./constants')
 
 function marked(mark, grid, index) {
     return mark === grid[index]
 }
 
-function twoConsecutive(func, array) {
-    let last = false
-    for (let value of array) {
-        let current = func(value)
+function twoConsecutive(predicate, array) {
+    var last = false
+    for (var i = 0, n = array.length; i < n; i++) {
+        var value = array[i]
+        var current = predicate(value)
         if (last && current)
             return true
         else
@@ -15,24 +16,35 @@ function twoConsecutive(func, array) {
     }
 }
 
-export function detectWin(mark, grid) {
-    let marked = marked.bind(null, mark, grid)
-    return constants.ROWS.some(row => row.every(marked))
+function detectWin(mark, grid) {
+    var ROWS = constants.ROWS
+    var marked = marked.bind(null, mark, grid)
+    return ROWS.some(function(row) {
+        return row.every(marked)
+    })
 }
 
-export function detectTwoInARow(mark, grid) {
-    let marked = marked.bind(null, mark, grid)
-    for (let row of constants.ROWS) {
+function detectTwoInARow(mark, grid) {
+    var ROWS = constants.ROWS
+    var marked = marked.bind(null, mark, grid)
+    for (var i = 0, n = ROWS.length; i < n; i++) {
+        var row = ROWS[i]
         if (twoConsecutive(marked, row))
             return row
     }
 }
 
-export function detectFreeSpaces(grid) {
-    const FREE_SPACE = constants.FREE_SPACE
-    return Array.from(grid).reduce((freeSpaces, space, index) => {
+function detectFreeSpaces(grid) {
+    var FREE_SPACE = constants.FREE_SPACE
+    return Array.from(grid).reduce(function(freeSpaces, space, index) {
         if (space === FREE_SPACE)
             freeSpaces.push(index)
         return freeSpaces
     }, [])
+}
+
+module.exports = {
+    detectWin: detectWin,
+    detectTwoInARow: detectTwoInARow,
+    detectFreeSpaces: detectFreeSpaces
 }
