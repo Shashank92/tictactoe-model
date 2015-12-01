@@ -7,7 +7,7 @@ function TicTacToe(ai) {
     this.ai = ai
 }
 
-TicTacToe.prototype.startNewGame = function(difficulty, playerMark) {
+TicTacToe.prototype.startNewGame = function(playerMark, difficulty) {
     var FREE_SPACE = constants.FREE_SPACE
     var X = constants.X
     var O = constants.O
