@@ -29,17 +29,18 @@ function playerVsAIGame(playerMark) {
         }
     }
 
-    function gridToString() {
+    function gameStateString() {
         var gridString = grid.replace(/f/g, ' ').toUpperCase()
         return  Array.from({length: 3}, function(v, k) {
                     return k * 3
                 }).map(function(i) {
                    return Array.from(gridString.substr(i, 3)).join('|')
                 }).join('\n-----\n')
+                + '\n' + playerMark.toUpperCase() + "'s turn."
     }
 
-    function logGrid() {
-        console.log(gridToString())
+    function logGameState() {
+        console.log(gameStateString())
         return tttGame
     }
 
@@ -66,8 +67,8 @@ function playerVsAIGame(playerMark) {
         getPlayerMark: getPlayerMark,
         getAIMark: getAIMark,
         getGrid: getGrid,
-        gridToString: gridToString,
-        logGrid: logGrid,
+        gameStateString: gameStateString,
+        logGameState: logGameState,
         chooseCell: chooseCell
     }
 
