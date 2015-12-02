@@ -12,8 +12,8 @@ module.exports = {
         [0, 4, 8],
         [2, 4, 6]
     ],
-    SIDES: [1, 3, 5, 7],
     CORNERS: [0, 2, 6, 8],
+    EDGES: [1, 3, 5, 7],
     CENTER: 4,
     OPPOSITE_CORNER: {
         0: 8,

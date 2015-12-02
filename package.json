@@ -9,12 +9,14 @@
     "watch": "npm run watch-js &",
     "build-js": "browserify src/main.js -o bundle.js -d",
     "watch-js": "watchify src/main.js -o bundle.js -d -v",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/test"
   },
   "author": "Shashank Gupta",
   "license": "MIT",
   "repository": "null",
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^3.4.1"
+  },
   "dependencies": {
     "ramda": "^0.18.0"
   }
