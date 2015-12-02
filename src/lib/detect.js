@@ -14,8 +14,8 @@ function D(grid) {
     }
 
     function twoMarkedBy(mark, row) {
-        var spaceIsMine = markedBy.bind(null, mark)
-        return row.filter(spaceIsMine).length === 2
+        var cellIsMine = markedBy.bind(null, mark)
+        return row.filter(cellIsMine).length === 2
     }
 
     // Interface
@@ -26,24 +26,24 @@ function D(grid) {
     }
 
     function freeSpaces() {
-        return Array.from(grid).reduce(function(freeSpace, space, index) {
-            return  space === FREE_SPACE
+        return Array.from(grid).reduce(function(freeSpace, cell, index) {
+            return  cell === FREE_SPACE
                     ? freeSpace.concat(index)
                     : freeSpace
         }, [])
     }
 
     function wins(mark) {
-        var spaceIsMine = markedBy.bind(null, mark)
+        var cellIsMine = markedBy.bind(null, mark)
         return ROWS.some(function(row) {
-            return row.every(spaceIsMine)
+            return row.every(cellIsMine)
         })
     }
 
     function waysToWin(mark) {
-        var twoSpacesAreMine = twoMarkedBy.bind(null, mark)
+        var twoCellsAreMine = twoMarkedBy.bind(null, mark)
         return  unique(
-                    ROWS.filter(twoSpacesAreMine)
+                    ROWS.filter(twoCellsAreMine)
                     .map(function(row) {
                         return row.find(isFreeSpace)
                     })

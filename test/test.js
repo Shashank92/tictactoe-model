@@ -1,8 +1,6 @@
 var expect = require('chai').expect
 var D = require('../src/lib/detect')
-var constants = require('../src/lib/constants')
-
-Object.assign(global, constants)
+Object.assign(global, require('../src/lib/constants'))
 
 function testDetect() {
     // ***isEmpty***

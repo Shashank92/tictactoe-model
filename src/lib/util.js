@@ -7,6 +7,11 @@ function assertGridExists(grid) {
         throw new Error('Grid is either undefined or null.')
 }
 
+function assertMarkExists(mark) {
+    if (!exists(mark))
+        throw new Error('Mark is either undefined or null.')
+}
+
 function unique(values) {
     return values.reduce(function(seen, value) {
         return ~seen.indexOf(value) ? seen : seen.concat(value)
@@ -16,5 +21,6 @@ function unique(values) {
 module.exports = {
     exists: exists,
     assertGridExists: assertGridExists,
+    assertMarkExists: assertMarkExists,
     unique: unique
 }
