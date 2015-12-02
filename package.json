@@ -17,7 +17,5 @@
   "devDependencies": {
     "chai": "^3.4.1"
   },
-  "dependencies": {
-    "ramda": "^0.18.0"
-  }
+  "dependencies": {}
 }

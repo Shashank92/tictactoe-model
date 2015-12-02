@@ -14,15 +14,16 @@ function assertGridExists(grid) {
         throw new Error('Grid is undefined or null.') 
 }
 
-function marked(mark, grid, index) {
-    return mark === grid[index]
+function checkMark(mark, grid, index) {
+    return grid[index] === mark
 }
 
 function detectWin(mark, grid) {
     assertMarkExists(mark)
     assertGridExists(grid)
     var ROWS = constants.ROWS
-    var spaceIsMine = marked.bind(null, mark, grid)
+    var spaceIsMine = checkMark.bind(null, mark, grid)
+    
     return ROWS.some(function(row) {
         return row.every(spaceIsMine)
     })
@@ -31,6 +32,7 @@ function detectWin(mark, grid) {
 function detectFreeSpaces(grid) {
     assertGridExists(grid)
     var FREE_SPACE = constants.FREE_SPACE
+
     return Array.from(grid).reduce(function(freeSpaces, space, index) {
         if (space === FREE_SPACE)
             freeSpaces.push(index)
@@ -45,10 +47,29 @@ function detectEmpty(grid) {
     })
 }
 
+function checkTwoMarked(mark, grid, row) {
+    var spaceIsMine = checkMark.bind(null, mark, grid)
+    return row.filter(spaceIsMine).length === 2
+}
+
+function checkFreeSpace(grid, index) {
+    return grid[index] === constants.FREE_SPACE
+}
+
 function detectWaysToWin(mark, grid) {
     assertMarkExists(mark)
     assertGridExists(grid)
-    
+    var ROWS = constants.ROWS
+    var twoSpacesAreMine = checkTwoMarked.bind(null, mark, grid)
+    var spaceIsFree = checkFreeSpace.bind(null, grid)
+
+    return ROWS.filter(twoSpacesAreMine).map(function(row) {
+        return row.filter(spaceIsFree)
+    }).filter(function(spaceNotMarkedInRow) {
+        return spaceNotMarkedInRow.length
+    }).map(function(winningIndex) {
+        return winningIndex[0]
+    })
 }
 
 module.exports = {
