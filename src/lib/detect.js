@@ -1,8 +1,17 @@
 var constants = require('./constants')
 
+function exists(value) {
+    return typeof value !== 'undefined' && value !== null
+}
+
+function assertMarkExists(mark) {
+    if (!exists(mark))
+        throw new Error('Mark is undefined or null.')
+}
+
 function assertGridExists(grid) {
-    if (typeof grid === 'undefined' || grid === null)
-        throw new Error('Grid is not initialized.') 
+    if (!exists(grid))
+        throw new Error('Grid is undefined or null.') 
 }
 
 function marked(mark, grid, index) {
@@ -10,6 +19,7 @@ function marked(mark, grid, index) {
 }
 
 function detectWin(mark, grid) {
+    assertMarkExists(mark)
     assertGridExists(grid)
     var ROWS = constants.ROWS
     var spaceIsMine = marked.bind(null, mark, grid)
@@ -29,13 +39,21 @@ function detectFreeSpaces(grid) {
 }
 
 function detectEmpty(grid) {
+    assertGridExists(grid)
     return Array.from(grid).every(function(c) {
         return c === 'f'
     })
+}
+
+function detectWaysToWin(mark, grid) {
+    assertMarkExists(mark)
+    assertGridExists(grid)
+    
 }
 
 module.exports = {
     detectWin: detectWin,
     detectFreeSpaces: detectFreeSpaces,
     detectEmpty: detectEmpty,
+    detectWaysToWin: detectWaysToWin
 }
