@@ -1,2 +1,2 @@
 #tictactoe-model
-Tic-tac-toe model in JS. src/ contains the model. App can extend the model in any way (for example with a browserified react view) but the focus of this project is to encapsulate game state with an asynchronous Promise-based interface that an AI and human can symmetrically interact with.
+Tic-tac-toe model in JS. src/ contains the model. App can extend the model in any way (for example with a browserified react view) but the focus of this project is to encapsulate game state and AI using the simplest approach possible.

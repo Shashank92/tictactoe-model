@@ -9,7 +9,7 @@ function assertGridExists(grid) {
 
 function assertMarkExists(mark) {
     if (!exists(mark))
-        throw new Error('Mark is either undefined or null.')
+        throw new Error('Given mark is either undefined or null.')
 }
 
 function unique(values) {
