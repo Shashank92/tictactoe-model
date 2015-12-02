@@ -1,49 +1,51 @@
 var expect = require('chai').expect
-var D = require('../src/ttt').D
+var D = require('../src/lib/detect')
+var constants = require('../src/lib/constants')
 
-// ***detectWin***
-var dw = D.detectWin
-var xw = dw.bind(null, 'x')
-var ow = dw.bind(null, 'o')
+Object.assign(global, constants)
 
-// Empty
-expect(xw('fffffffff')).equal(false)
-expect(ow('fffffffff')).equal(false)
+function testDetect() {
+    // ***isEmpty***
+    expect(D('fffffffff').isEmpty()).equal(true)
+    expect(D('ffffxffff').isEmpty()).equal(false)
+    expect(D('ffffoffff').isEmpty()).equal(false)
 
-// Straight Line
-expect(xw('xxxxxxxxx')).equal(true)
-expect(ow('ooooooooo')).equal(true)
+    // ***freeSpaces***
+    expect(D('fffffffff').freeSpaces()).deep.equal([0,1,2,3,4,5,6,7,8])
+    expect(D('oofofofoo').freeSpaces()).deep.equal([2, 4, 6])
+    expect(D('fxxxfxxxf').freeSpaces()).deep.equal([0, 4, 8])
 
-// Diags
-expect(xw('xoooxooox')).equal(true)
-expect(xw('ooxoxoxoo')).equal(true)
+    // ***wins***
 
-expect(ow('oxxxoxxxo')).equal(true)
-expect(ow('xxoxoxoxx')).equal(true)
+    // Empty
+    expect(D('fffffffff').wins(X)).equal(false)
+    expect(D('fffffffff').wins(O)).equal(false)
 
-// Throws
-expect(xw).throw(Error)
-expect(ow).throw(Error)
+    // Straight Line
+    expect(D('xxxxxxxxx').wins(X)).equal(true)
+    expect(D('ooooooooo').wins(O)).equal(true)
 
-// ***detectFreeSpaces***
-var dfs = D.detectFreeSpaces
-expect(dfs('fffffffff')).deep.equal([0,1,2,3,4,5,6,7,8])
-expect(dfs('oofofofoo')).deep.equal([2, 4, 6])
-expect(dfs('fxxxfxxxf')).deep.equal([0, 4, 8])
+    // Diags
+    expect(D('xoooxooox').wins(X)).equal(true)
+    expect(D('ooxoxoxoo').wins(X)).equal(true)
 
-// ***detectEmpty***
-var de = D.detectEmpty
-expect(de('fffffffff')).equal(true)
-expect(de('ffffxffff')).equal(false)
+    expect(D('oxxxoxxxo').wins(O)).equal(true)
+    expect(D('xxoxoxoxx').wins(O)).equal(true)
 
-// ***detectWaysToWin***
-var dwtw = D.detectWaysToWin
-var dwtwx = dwtw.bind(null, 'x')
-var dwtwo = dwtw.bind(null, 'o')
-expect(dwtwx('xfffffffx')).deep.equal([4])
-expect(dwtwo('ffofffoff')).deep.equal([4])
-expect(dwtwx('xfofffxfo')).deep.equal([3])
-expect(dwtwo('xfofffxfo')).deep.equal([5])
-expect(dwtwx('xfxfffxfx')).deep.equal([1, 3, 4, 5, 7])
+    // ***waysToWin***
+    expect(D('xfffffffx').waysToWin(X)).deep.equal([4])
+    expect(D('ffofffoff').waysToWin(O)).deep.equal([4])
+    expect(D('xfofffxfo').waysToWin(X)).deep.equal([3])
+    expect(D('xfofffxfo').waysToWin(O)).deep.equal([5])
+    expect(D('xfxfffxfx').waysToWin(X)).deep.equal([1, 3, 4, 5, 7])
 
-console.log('All tests passed')
+    console.log('Detect - all tests passed.')
+}
+
+if (require.main === module) {
+    testDetect()
+} else {
+    module.exports = {
+        testDetect: testDetect
+    }
+}
