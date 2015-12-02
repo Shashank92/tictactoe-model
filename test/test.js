@@ -1,5 +1,5 @@
 var expect = require('chai').expect
-var D = require('../src/main').D
+var D = require('../src/ttt').D
 
 // ***detectWin***
 var dw = D.detectWin
@@ -25,11 +25,10 @@ expect(ow('xxoxoxoxx')).equal(true)
 expect(xw).throw(Error)
 expect(ow).throw(Error)
 
-// ***detectTwoInARow***
-var dtiar = D.detectTwoInARow
-var dtiarX = dtiar.bind('x')
-var ditarO = dtiar.bind('o')
-
+// ***detectEmpty**
+var de = D.detectEmpty
+expect(de('fffffffff')).equal(true)
+expect(de('ffffxffff')).equal(false)
 
 // ***detectFreeSpaces***
 var dfs = D.detectFreeSpaces

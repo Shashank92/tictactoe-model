@@ -9,18 +9,6 @@ function marked(mark, grid, index) {
     return mark === grid[index]
 }
 
-function twoConsecutive(predicate, array) {
-    var last = false
-    for (var i = 0, n = array.length; i < n; i++) {
-        var value = array[i]
-        var current = predicate(value)
-        if (last && current)
-            return true
-        else
-            last = current
-    }
-}
-
 function detectWin(mark, grid) {
     assertGridExists(grid)
     var ROWS = constants.ROWS
@@ -28,17 +16,6 @@ function detectWin(mark, grid) {
     return ROWS.some(function(row) {
         return row.every(spaceIsMine)
     })
-}
-
-function detectTwoInARow(mark, grid) {
-    assertGridExists(grid)
-    var ROWS = constants.ROWS
-    var spaceIsMine = marked.bind(null, mark, grid)
-    for (var i = 0, n = ROWS.length; i < n; i++) {
-        var row = ROWS[i]
-        if (twoConsecutive(spaceIsMine, row))
-            return row
-    }
 }
 
 function detectFreeSpaces(grid) {
@@ -51,8 +28,14 @@ function detectFreeSpaces(grid) {
     }, [])
 }
 
+function detectEmpty(grid) {
+    return Array.from(grid).every(function(c) {
+        return c === 'f'
+    })
+}
+
 module.exports = {
     detectWin: detectWin,
-    detectTwoInARow: detectTwoInARow,
-    detectFreeSpaces: detectFreeSpaces
+    detectFreeSpaces: detectFreeSpaces,
+    detectEmpty: detectEmpty,
 }
