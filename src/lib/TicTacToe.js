@@ -55,4 +55,8 @@ TicTacToe.prototype.detectWin = function(mark) {
     return D.detectWin(mark, this.grid)
 }
 
+//* For testing purposes.
+TicTacToe.prototype.D = D
+//*/
+
 module.exports = TicTacToe

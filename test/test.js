@@ -31,7 +31,6 @@ var dtiarX = dtiar.bind('x')
 var ditarO = dtiar.bind('o')
 
 
-
 // ***detectFreeSpaces***
 var dfs = D.detectFreeSpaces
 

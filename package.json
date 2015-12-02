@@ -2,13 +2,13 @@
   "name": "ttt",
   "version": "1.0.0",
   "description": "null",
-  "main": "bundle.js",
+  "main": "dist/bundle",
   "scripts": {
-    "start": "node bundle",
+    "start": "node dist/bundle",
     "build": "npm run build-js &",
     "watch": "npm run watch-js &",
-    "build-js": "browserify src/main.js -o bundle.js -d",
-    "watch-js": "watchify src/main.js -o bundle.js -d -v",
+    "build-js": "browserify app.js -o dist/bundle.js -d",
+    "watch-js": "watchify app.js -o dist/bundle.js -d -v",
     "test": "node test/test"
   },
   "author": "Shashank Gupta",
