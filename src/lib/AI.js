@@ -21,7 +21,7 @@ function AI(grid, mark) {
         //
     }
 
-    return Promise.resolve(randomChoice())
+    return randomChoice()
 }
 
 module.exports = AI
