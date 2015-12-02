@@ -2,7 +2,7 @@ var D = require('./detect')
 Object.assign(global, require('./constants'))
 Object.assign(global, require('./util'))
 
-function AI(grid, mark) {
+function AI(mark, grid) {
     assertGridExists(grid)
     assertMarkExists(mark)
     var opponentsMark = mark === X ? O : X

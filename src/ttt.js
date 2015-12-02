@@ -3,8 +3,7 @@ var AI = require('./lib/AI')
 Object.assign(global, require('./lib/constants'))
 
 function playerVsAIGame(playerMark) {
-    //assertMarkExists(playerMark)
-
+    playerMark = playerMark || X
     var AIMark = playerMark === X ? O : X
     var grid = FREE_SPACE.repeat(9)
 
@@ -20,6 +19,16 @@ function playerVsAIGame(playerMark) {
         return grid
     }
 
+    function markCell(mark, index) {
+        if (grid[index] === FREE_SPACE) {
+            grid = grid.substr(0, index)
+                    + mark
+                    + grid.substr(index + 1)
+        } else {
+            throw new Error('Attempting to mark an occupied or invalid cell.')
+        }
+    }
+
     function gridToString() {
         var gridString = grid.replace(/f/g, ' ').toUpperCase()
         return  Array.from({length: 3}, function(v, k) {
@@ -29,14 +38,9 @@ function playerVsAIGame(playerMark) {
                 }).join('\n-----\n')
     }
 
-    function markCell(mark, index) {
-        if (grid[index] === FREE_SPACE) {
-            grid = grid.substr(0, index)
-                    + playerMark 
-                    + grid.substr(index + 1)
-        } else {
-            throw new Error('Attempting to mark an occupied or invalid cell.')
-        }
+    function logGrid() {
+        console.log(gridToString())
+        return tttGame
     }
 
     function chooseCell(index) {
@@ -45,11 +49,11 @@ function playerVsAIGame(playerMark) {
             ;
         else
             yieldToAI()
+        return tttGame
     }
 
     function yieldToAI() {
-        var index = AI(grid, AIMark)
-        console.log(index)
+        var index = AI(AIMark, grid)
         markCell(AIMark, index)
         if (D(grid).wins(AIMark))
             ;
@@ -58,13 +62,16 @@ function playerVsAIGame(playerMark) {
     if (AIMark === X)
         yieldToAI()
 
-    return {
+    var tttGame = {
         getPlayerMark: getPlayerMark,
         getAIMark: getAIMark,
         getGrid: getGrid,
         gridToString: gridToString,
+        logGrid: logGrid,
         chooseCell: chooseCell
     }
+
+    return tttGame
 }
 
 module.exports = {
