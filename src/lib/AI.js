@@ -1,4 +1,3 @@
-var Promise = require('bluebird')
 var D = require('./detect')
 Object.assign(global, require('./constants'))
 Object.assign(global, require('./util'))
