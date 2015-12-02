@@ -13,7 +13,7 @@ TicTacToe.prototype.startNewGame = function(playerMark, difficulty) {
     var O = constants.O
     this.playerMark = playerMark || X
     this.aiMark = this.playerMark === X ? O : X
-    this.grid = Array(9).fill(FREE_SPACE).join('')
+    this.grid = FREE_SPACE.repeat(9)
     this.aiApplyStrategy = (
         !difficulty || difficulty === 'easy'
         ? this.ai.markRandom

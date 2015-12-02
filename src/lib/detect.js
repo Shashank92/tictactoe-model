@@ -23,7 +23,7 @@ function detectWin(mark, grid) {
     assertGridExists(grid)
     var ROWS = constants.ROWS
     var spaceIsMine = checkMark.bind(null, mark, grid)
-    
+
     return ROWS.some(function(row) {
         return row.every(spaceIsMine)
     })
@@ -42,8 +42,9 @@ function detectFreeSpaces(grid) {
 
 function detectEmpty(grid) {
     assertGridExists(grid)
+    var FREE_SPACE = constants.FREE_SPACE
     return Array.from(grid).every(function(c) {
-        return c === 'f'
+        return c === FREE_SPACE
     })
 }
 
@@ -64,12 +65,8 @@ function detectWaysToWin(mark, grid) {
     var spaceIsFree = checkFreeSpace.bind(null, grid)
 
     return ROWS.filter(twoSpacesAreMine).map(function(row) {
-        return row.filter(spaceIsFree)
-    }).filter(function(spaceNotMarkedInRow) {
-        return spaceNotMarkedInRow.length
-    }).map(function(winningIndex) {
-        return winningIndex[0]
-    })
+        return row.find(spaceIsFree)
+    }).filter(exists)
 }
 
 module.exports = {
