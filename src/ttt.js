@@ -49,7 +49,7 @@ function playerVsAI(playerMark) {
 
     function yieldToAI() {
         AI(grid, AIMark).then(function(index) {
-            console.log('AI finished move bwahaha')
+            console.log('AI chose a move bwahaha')
             markCell(AIMark, index)
             yieldToPlayer()
         }).catch(console.error.bind(console))
