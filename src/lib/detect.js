@@ -19,13 +19,14 @@ function D(grid) {
     }
 
     // Interface
-    function isEmpty() {
-        return Array.from(grid).every(function(character, index) {
-            return isFreeSpace(index)
+    function winningRow(mark) {
+        var cellIsMine = markedBy.bind(null, mark)
+        return ROWS.find(function(row) {
+            return row.every(cellIsMine)
         })
     }
 
-    function freeSpaces() {
+   function freeSpaces() {
         return Array.from(grid).reduce(function(freeSpace, cell, index) {
             return  cell === FREE_SPACE
                     ? freeSpace.concat(index)
@@ -33,10 +34,9 @@ function D(grid) {
         }, [])
     }
 
-    function wins(mark) {
-        var cellIsMine = markedBy.bind(null, mark)
-        return ROWS.find(function(row) {
-            return row.every(cellIsMine)
+    function isEmpty() {
+        return Array.from(grid).every(function(character, index) {
+            return isFreeSpace(index)
         })
     }
 
@@ -51,11 +51,20 @@ function D(grid) {
                 ).sort()
     }
 
+    function children(mark) {
+        return  freeSpaces().map(function(freeSpace) {
+                    return  grid.substr(0, freeSpace)
+                            + mark
+                            + grid.substr(freeSpace + 1)
+                })
+    }
+
     return {
-        isEmpty: isEmpty,
+        winningRow: winningRow,
         freeSpaces: freeSpaces,
-        wins: wins,
+        isEmpty: isEmpty,
         waysToWin: waysToWin,
+        children: children
     }
 }
 

@@ -5,11 +5,8 @@ Object.assign(global, require('./util'))
 function AI(mark, grid) {
     assertGridExists(grid)
     assertMarkExists(mark)
-    var opponentsMark = mark === X ? O : X
     var detect = D(grid)
-    var isEmpty = detect.isEmpty()
     var freeSpaces = detect.freeSpaces()
-    var waysToWin = detect.waysToWin(mark)
 
     function randomChoice() {
         var randomIndex = Math.floor(Math.random() * freeSpaces.length)
@@ -17,10 +14,19 @@ function AI(mark, grid) {
     }
 
     function bestChoice() {
-        //
+        var opponentsMark = mark === X ? O : X
+        var isEmpty = detect.isEmpty()
+        var waysToWin = detect.waysToWin(mark)
+        var children = detect.children(mark)
+        if (isEmpty) {
+            return 0
+        } else if (waysToWin.length) {
+            return waysToWin[0]
+        }
+        return randomChoice()
     }
 
-    return randomChoice()
+    return bestChoice()
 }
 
 module.exports = AI
