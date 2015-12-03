@@ -39,6 +39,7 @@ function testDetect() {
 
     // ***children***
     expect(D('xxxxxxxfx').children(X)).deep.equal(['xxxxxxxxx'])
+    expect(D('fooooooof').children(O)).deep.equal(['oooooooof', 'foooooooo'])
 
     console.log('Detect - all tests passed.')
 }
