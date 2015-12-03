@@ -31,8 +31,8 @@ function playerVsAIGame(playerMark) {
 
     function gameStateString() {
         var gridString = grid.replace(/f/g, ' ').toUpperCase()
-        return  Array.from({length: 3}, function(v, k) {
-                    return k * 3
+        return  Array.from({length: 3}, function(v, i) {
+                    return i * 3
                 }).map(function(i) {
                    return Array.from(gridString.substr(i, 3)).join('|')
                 }).join('\n-----\n')
