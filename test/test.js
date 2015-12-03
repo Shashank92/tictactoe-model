@@ -16,19 +16,19 @@ function testDetect() {
     // ***wins***
 
     // Empty
-    expect(D('fffffffff').wins(X)).equal(false)
-    expect(D('fffffffff').wins(O)).equal(false)
+    expect(D('fffffffff').wins(X)).an('undefined')
+    expect(D('fffffffff').wins(O)).an('undefined')
 
     // Straight Line
-    expect(D('xxxxxxxxx').wins(X)).equal(true)
-    expect(D('ooooooooo').wins(O)).equal(true)
+    expect(D('xxxofooof').wins(X)).deep.equal([0, 1, 2])
+    expect(D('xxxooofff').wins(O)).deep.equal([3, 4, 5])
 
     // Diags
-    expect(D('xoooxooox').wins(X)).equal(true)
-    expect(D('ooxoxoxoo').wins(X)).equal(true)
+    expect(D('xoooxooox').wins(X)).deep.equal([0, 4, 8])
+    expect(D('ooxoxoxoo').wins(X)).deep.equal([2, 4, 6])
 
-    expect(D('oxxxoxxxo').wins(O)).equal(true)
-    expect(D('xxoxoxoxx').wins(O)).equal(true)
+    expect(D('oxxxoxxxo').wins(O)).deep.equal([0, 4, 8])
+    expect(D('xxoxoxoxx').wins(O)).deep.equal([2, 4, 6])
 
     // ***waysToWin***
     expect(D('xfffffffx').waysToWin(X)).deep.equal([4])

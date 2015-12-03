@@ -35,7 +35,7 @@ function D(grid) {
 
     function wins(mark) {
         var cellIsMine = markedBy.bind(null, mark)
-        return ROWS.some(function(row) {
+        return ROWS.find(function(row) {
             return row.every(cellIsMine)
         })
     }
@@ -55,7 +55,7 @@ function D(grid) {
         isEmpty: isEmpty,
         freeSpaces: freeSpaces,
         wins: wins,
-        waysToWin: waysToWin
+        waysToWin: waysToWin,
     }
 }
 

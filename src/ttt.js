@@ -6,6 +6,9 @@ function playerVsAIGame(playerMark) {
     playerMark = playerMark || X
     var AIMark = playerMark === X ? O : X
     var grid = FREE_SPACE.repeat(9)
+    // To be decided upon.
+    var winningRow
+    var winner
 
     function getPlayerMark() {
         return playerMark
@@ -21,7 +24,7 @@ function playerVsAIGame(playerMark) {
 
     function markCell(mark, index) {
         if (grid[index] === FREE_SPACE) {
-            grid = grid.substr(0, index)
+            grid =  grid.substr(0, index)
                     + mark
                     + grid.substr(index + 1)
         } else {
@@ -30,13 +33,16 @@ function playerVsAIGame(playerMark) {
     }
 
     function gameStateString() {
+        var footnote =  winner 
+                        ? winner.toUpperCase() + ' wins!'
+                        : '\n' + playerMark.toUpperCase() + "'s turn."
         var gridString = grid.replace(/f/g, ' ').toUpperCase()
         return  Array.from({length: 3}, function(v, i) {
                     return i * 3
                 }).map(function(i) {
                    return Array.from(gridString.substr(i, 3)).join('|')
                 }).join('\n-----\n')
-                + '\n' + playerMark.toUpperCase() + "'s turn."
+                + '\n' + footnote
     }
 
     function logGameState() {
@@ -44,24 +50,30 @@ function playerVsAIGame(playerMark) {
         return tttGame
     }
 
-    function chooseCell(index) {
-        markCell(playerMark, index)
-        if (D(grid).wins(playerMark))
-            ;
-        else
-            yieldToAI()
-        return tttGame
-    }
-
     function yieldToAI() {
+        if (winner)
+            throw new Error('AI attempting to choose cell after'
+                            + ' game has already been decided.')
         var index = AI(AIMark, grid)
         markCell(AIMark, index)
-        if (D(grid).wins(AIMark))
-            ;
+        if (winningRow = D(grid).wins(AIMark))
+            winner = AIMark
     }
 
     if (AIMark === X)
         yieldToAI()
+
+    function chooseCell(index) {
+        if (winner)
+            throw new Error('Player attempting to choose cell after'
+                            + ' game has already been decided.')
+        markCell(playerMark, index)
+        if (winningRow = D(grid).wins(playerMark))
+            winner = playerMark
+        else
+            yieldToAI()
+        return tttGame
+    }
 
     var tttGame = {
         getPlayerMark: getPlayerMark,
