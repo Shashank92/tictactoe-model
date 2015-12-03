@@ -1,3 +1,4 @@
+require('./lib/polyfill')
 var D = require('./lib/detect')
 var AI = require('./lib/AI')
 Object.assign(global, require('./lib/constants'))
@@ -83,7 +84,7 @@ function playerVsAIGame(playerMark) {
         logGameState: logGameState,
         chooseCell: chooseCell
     }
-    
+
     return tttGame
 }
 

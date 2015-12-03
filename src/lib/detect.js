@@ -1,3 +1,4 @@
+require('./polyfill')
 Object.assign(global, require('./constants'))
 Object.assign(global, require('./util'))
 
