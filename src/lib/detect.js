@@ -74,7 +74,8 @@ function D(grid) {
         freeSpaces: freeSpaces,
         isEmpty: isEmpty,
         waysToWin: waysToWin,
-        children: children
+        children: children,
+        childIsFork: childIsFork
     }
 }
 
