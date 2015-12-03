@@ -3,8 +3,9 @@ Object.assign(global, require('./constants'))
 Object.assign(global, require('./util'))
 
 function AI(mark, grid) {
-    assertGridExists(grid)
     assertMarkExists(mark)
+    assertGridExists(grid)
+    
     var detect = D(grid)
     var freeSpaces = detect.freeSpaces()
 
