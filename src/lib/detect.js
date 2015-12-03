@@ -63,6 +63,10 @@ function D(grid) {
         })
     }
 
+    function childIsFork(mark, child) {
+        return D(child.grid).waysToWin(mark).length > 1
+    }
+
 
 
     return {
