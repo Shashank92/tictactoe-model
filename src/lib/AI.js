@@ -28,22 +28,36 @@ function AI(mark, grid) {
         }
 
         // If your opponent can win, block them.
-        var opponentMark = mark === X ? O : X
-        var cellsToBlock = detect.waysToWin(opponentMark)
+        var opponentsMark = mark === X ? O : X
+        var cellsToBlock = detect.waysToWin(opponentsMark)
         if (cellsToBlock.length) {
-            console.log('blocking opponent 2-in-a-row')
             return cellsToBlock[0]
         }
 
         // Detect children that are forks
         // Create fork if possible.
         var children = detect.children(mark)
-        var forks = children.filter(detect.childIsFork.bind(null, mark))
-        if (forks.length)
+        var detectChildFork = detect.childIsFork.bind(null, mark)
+        var forks = children.filter(detectChildFork)
+        if (forks.length) {
             return forks[0].path
+        }
 
         // Block opponent's chance to fork
         // Preferably as aggressively as possible.
+        var opponentsChildren = detect.children(opponentsMark)
+        var detectOpponentChildFork = detect.childIsFork
+                                        .bind(null, opponentsMark)
+        var opponentsForks = children.filter(detectOpponentChildFork)
+        if (opponentsForks.length) {
+            return opponentForks[0].path
+        }
+
+        if (~freeSpaces.indexOf(CENTER)) {
+            return CENTER
+        }
+        // Opposite corner: If the opponent is in the corner, 
+        // play the opposite corner.
         return randomChoice()
     }
 
