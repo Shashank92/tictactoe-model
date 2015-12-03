@@ -14,15 +14,18 @@ function AI(mark, grid) {
     }
 
     function bestChoice() {
-        var opponentsMark = mark === X ? O : X
         var isEmpty = detect.isEmpty()
-        var waysToWin = detect.waysToWin(mark)
-        var children = detect.children(mark)
         if (isEmpty) {
             return 0
-        } else if (waysToWin.length) {
+        } 
+        var waysToWin = detect.waysToWin(mark)
+        if (waysToWin.length) {
             return waysToWin[0]
         }
+        var opponentMark = mark === X ? O : X
+        var children = detect.children(mark)
+        var childrenDetects = children.map(D)
+        ;
         return randomChoice()
     }
 
