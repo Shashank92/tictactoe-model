@@ -38,8 +38,13 @@ function testDetect() {
     expect(D('xfxfffxfx').waysToWin(X)).deep.equal([1, 3, 4, 5, 7])
 
     // ***children***
-    expect(D('xxxxxxxfx').children(X)).deep.equal(['xxxxxxxxx'])
-    expect(D('fooooooof').children(O)).deep.equal(['oooooooof', 'foooooooo'])
+    var expected = [ { path: 7, grid: 'xxxxxxxxx' } ]
+    expect(D('xxxxxxxfx').children(X)).deep.equal(expected)
+    expected = [ 
+        { path: 0, grid: 'oooooooof' },
+        { path: 8, grid: 'foooooooo' } 
+    ]
+    expect(D('fooooooof').children(O)).deep.equal(expected)
 
     console.log('Detect - all tests passed.')
 }

@@ -53,12 +53,17 @@ function D(grid) {
     }
 
     function children(mark) {
-        return  freeSpaces().map(function(freeSpace) {
-                    return  grid.substr(0, freeSpace)
-                            + mark
-                            + grid.substr(freeSpace + 1)
-                })
+        return freeSpaces().map(function(freeSpace) {
+            return {
+                path: freeSpace,
+                grid: grid.substr(0, freeSpace)
+                        + mark
+                        + grid.substr(freeSpace + 1)
+            }
+        })
     }
+
+
 
     return {
         winningRow: winningRow,

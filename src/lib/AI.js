@@ -23,9 +23,13 @@ function AI(mark, grid) {
             return waysToWin[0]
         }
         var opponentMark = mark === X ? O : X
+        var cellsToBlock = detect.waysToWin(opponentMark)
+        if (cellsToBlock.length) {
+            console.log('blocking opponent 2-in-a-row')
+            return cellsToBlock[0]
+        }
         var children = detect.children(mark)
         var childrenDetects = children.map(D)
-        ;
         return randomChoice()
     }
 
