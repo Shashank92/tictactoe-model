@@ -2,7 +2,7 @@ var _ = require('lodash')
 var D = require('./detect')
 Object.assign(global, require('./constants'))
 
-function AI(mark, grid) {
+function ai(mark, grid) {
     var freeSpaces = D.freeSpaces(grid)
 
     function randomChoice() {
@@ -59,4 +59,4 @@ function AI(mark, grid) {
     return bestChoice()
 }
 
-module.exports = AI
+module.exports = ai

@@ -1,11 +1,11 @@
 var _ = require('lodash')
 var D = require('./lib/detect')
-var AI = require('./lib/AI')
+var ai = require('./lib/ai')
 Object.assign(glboal, './lib/constants')
 
-function playerVsAIGame(playerMark) {
+function playerVsaiGame(playerMark) {
     playerMark = playerMark || X
-    var AIMark = playerMark === X ? O : X
+    var aiMark = playerMark === X ? O : X
     var grid = FREE_SPACE.repeat(9)
     // To be decided upon.
     var winningRow
@@ -15,8 +15,8 @@ function playerVsAIGame(playerMark) {
         return playerMark
     }
 
-   function getAIMark() {
-        return AIMark
+   function getaiMark() {
+        return aiMark
     }
 
     function getGrid() {
@@ -51,14 +51,14 @@ function playerVsAIGame(playerMark) {
         return tttGame
     }
 
-    function yieldToAI() {
+    function yieldToai() {
         if (winner)
-            throw new Error('AI attempting to choose cell after'
+            throw new Error('ai attempting to choose cell after'
                             + ' game has already been decided.')
-        var index = AI(AIMark, grid)
-        markCell(AIMark, index)
-        if (winningRow = D(grid).winningRow(AIMark))
-            winner = AIMark
+        var index = ai(aiMark, grid)
+        markCell(aiMark, index)
+        if (winningRow = D(grid).winningRow(aiMark))
+            winner = aiMark
     }
 
     function chooseCell(index) {
@@ -69,16 +69,16 @@ function playerVsAIGame(playerMark) {
         if (winningRow = D(grid).winningRow(playerMark))
             winner = playerMark
         else
-            yieldToAI()
+            yieldToai()
         return tttGame
     }
 
-    if (AIMark === X)
-        yieldToAI()
+    if (aiMark === X)
+        yieldToai()
 
     var tttGame = {
         getPlayerMark: getPlayerMark,
-        getAIMark: getAIMark,
+        getaiMark: getaiMark,
         getGrid: getGrid,
         gameStateString: gameStateString,
         logGameState: logGameState,
@@ -89,7 +89,7 @@ function playerVsAIGame(playerMark) {
 }
 
 module.exports = {
-    playerVsAIGame: playerVsAIGame,
-    playerXVsAIGame: playerVsAIGame.bind(null, X),
-    playerOVsAIGame: playerVsAIGame.bind(null, O)
+    playerVsaiGame: playerVsaiGame,
+    playerXVsaiGame: playerVsaiGame.bind(null, X),
+    playerOVsaiGame: playerVsaiGame.bind(null, O)
 }
