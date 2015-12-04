@@ -3,11 +3,7 @@ var D = require('./detect')
 Object.assign(global, require('./constants'))
 
 function AI(mark, grid) {
-    assertMarkExists(mark)
-    assertGridExists(grid)
-    
-    var detect = D(grid)
-    var freeSpaces = detect.freeSpaces()
+    var freeSpaces = D.freeSpaces(grid)
 
     function randomChoice() {
         var randomIndex = Math.floor(Math.random() * freeSpaces.length)
@@ -17,40 +13,39 @@ function AI(mark, grid) {
     function bestChoice() {
         // If X and first move, 
         // move top left corner to be as aggressive as possible.
-        var isEmpty = detect.isEmpty()
+        var isEmpty = D.isEmpty(grid)
         if (isEmpty) {
             return 0
         } 
         // If there is a way to win, take it.
-        var waysToWin = detect.waysToWin(mark)
+        var waysToWin = D.waysToWin(mark, grid)
         if (waysToWin.length) {
-            return waysToWin[0]
+            return _.first(waysToWin)
         }
 
         // If your opponent can win, block them.
         var opponentsMark = mark === X ? O : X
-        var cellsToBlock = detect.waysToWin(opponentsMark)
+        var cellsToBlock = D.waysToWin(opponentsMark, grid)
         if (cellsToBlock.length) {
-            return cellsToBlock[0]
+            return _.first(cellsToBlock)
         }
 
         // Detect children that are forks
         // Create fork if possible.
-        var children = detect.children(mark)
-        var detectChildFork = detect.childIsFork.bind(null, mark)
-        var forks = children.filter(detectChildFork)
+        var children = D.children(mark, grid)
+        var detectChildFork = _.partial(D.childIsFork, mark)
+        var forks = _.filter(children, detectChildFork)
         if (forks.length) {
-            return forks[0].path
+            return _first(forks).path
         }
 
         // Block opponent's chance to fork
         // Preferably as aggressively as possible.
-        var opponentsChildren = detect.children(opponentsMark)
-        var detectOpponentChildFork = detect.childIsFork
-                                        .bind(null, opponentsMark)
+        var opponentsChildren = D.children(opponentsMark, grid)
+        var detectOpponentChildFork = _.partial(D.childIsFork, opponentsMark)
         var opponentsForks = children.filter(detectOpponentChildFork)
         if (opponentsForks.length) {
-            return opponentForks[0].path
+            return _first(opponentsForks).path
         }
 
         if (~freeSpaces.indexOf(CENTER)) {
