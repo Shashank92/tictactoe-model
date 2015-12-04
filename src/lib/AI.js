@@ -1,6 +1,6 @@
+var _ = require('lodash')
 var D = require('./detect')
 Object.assign(global, require('./constants'))
-Object.assign(global, require('./util'))
 
 function AI(mark, grid) {
     assertMarkExists(mark)

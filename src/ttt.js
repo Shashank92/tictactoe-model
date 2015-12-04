@@ -1,7 +1,7 @@
-require('./lib/polyfill')
+var _ = require('lodash')
 var D = require('./lib/detect')
 var AI = require('./lib/AI')
-Object.assign(global, require('./lib/constants'))
+Object.assign(glboal, './lib/constants')
 
 function playerVsAIGame(playerMark) {
     playerMark = playerMark || X
