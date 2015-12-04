@@ -9,10 +9,12 @@ function testDetect() {
     expect(D.freeSpaces('fxxxfxxxf')).deep.equal([0, 4, 8])
 
     
-    // ***isEmpty***
+    // ***isEmpty/isFull***
     expect(D.isEmpty('fffffffff')).equal(true)
     expect(D.isEmpty('ffffxffff')).equal(false)
     expect(D.isEmpty('ffffoffff')).equal(false)
+    expect(D.isFull('xxxxxxxxf')).equal(false)
+    expect(D.isFull('ooooooooo')).equal(true)
 
     // ***winningRow***
 

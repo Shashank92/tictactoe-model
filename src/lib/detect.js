@@ -17,13 +17,8 @@ function allMarkedBy(mark, grid, row) {
 }
 
 // Interface
-function winningRow(mark, grid) {
-    var allCellsAreMine = _.partial(allMarkedBy, mark, grid)
-    return _.find(ROWS, allCellsAreMine)
-}
-
 function freeSpaces(grid) {
-    return _.reduce(_.toArray(grid), function(freeSpaces, cell, cellIndex) {
+    return _.reduce(grid, function(freeSpaces, cell, cellIndex) {
         return  cell === FREE_SPACE
                 ? freeSpaces.concat(cellIndex)
                 : freeSpaces
@@ -31,10 +26,23 @@ function freeSpaces(grid) {
 }
 
 function isEmpty(grid) {
-    return _.every(_.toArray(grid), function(cell) {
+    return _.every(grid, function(cell) {
         return cell === FREE_SPACE
     })
 }
+
+function isFull(grid) {
+    return _.every(grid, function(cell) {
+        return cell !== FREE_SPACE
+    })
+}
+
+function winningRow(mark, grid) {
+    var allCellsAreMine = _.partial(allMarkedBy, mark, grid)
+    return _.find(ROWS, allCellsAreMine)
+}
+
+
 
 function waysToWin(mark, grid) {
     var twoCellsAreMine = _.partial(twoMarkedBy, mark, grid)
@@ -80,6 +88,7 @@ module.exports = {
     winningRow: winningRow,
     freeSpaces: freeSpaces,
     isEmpty: isEmpty,
+    isFull: isFull,
     waysToWin: waysToWin,
     children: children,
     childIsFork: childIsFork
