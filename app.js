@@ -1,5 +1,4 @@
 Object.assign(global, require('./src/lib/constants'))
-Object.assign(global, require('./src/lib/util'))
+global.ai = require('./src/lib/ai')
 global.D = require('./src/lib/detect')
-global.AI = require('./src/lib/AI')
 global.T = require('./src/ttt')
