@@ -52,11 +52,11 @@ function waysToWin(mark, grid) {
         })
     }
 
-    var filterMostlyMineRows = _.partialRight(_.filter, twoCellsAreMine)
-    var mapRowsToFreeSpace = _.partialRight(_.map, findFreeSpace)
-    var filterDefined = _.partialRight(_.filter, _.negate(_.isUndefined))
+    var filterMostlyMineRows = _.partial(_.filter, _, twoCellsAreMine)
+    var mapRowsToFreeSpace = _.partial(_.map, _, findFreeSpace)
+    var filterDefined = _.partial(_.filter, _, _.negate(_.isUndefined))
     var sort = _.sortBy
-    var uniqSorted = _.partialRight(_.uniq, true)
+    var uniqSorted = _.partial(_.uniq, _, true)
 
     var findAllWaysToWin = _.flow(
         filterMostlyMineRows,
