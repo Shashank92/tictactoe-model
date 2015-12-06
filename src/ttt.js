@@ -16,7 +16,7 @@ function newGame(playerMark) {
         return playerMark
     }
 
-   function getaiMark() {
+   function getAiMark() {
         return aiMark
     }
 
@@ -99,7 +99,7 @@ function newGame(playerMark) {
 
     var tttGame = {
         getPlayerMark: getPlayerMark,
-        getaiMark: getaiMark,
+        getAiMark: getAiMark,
         getGrid: getGrid,
         getOutcome: getOutcome,
         getWinningRow: getWinningRow,
