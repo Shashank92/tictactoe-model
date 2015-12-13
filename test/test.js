@@ -85,6 +85,11 @@ function testOperations(ops) {
 
 function testTTT(ttt) {
   var game = ttt.newGame()
+  expect(game.getPlayerMark()).equal(X)
+  expect(game.getAiMark()).equal(O)
+  expect(game.getWinner()).is.undefined
+  expect(game.getWinningRow()).is.undefined
+  expect(game.getOutcomeString()).is.undefined
   expect(game.getGrid()).equal('fffffffff')
   var expectedGameStateString = ' | | '
     + '\n-----'
