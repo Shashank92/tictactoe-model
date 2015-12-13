@@ -98,6 +98,43 @@ function testTTT(ttt) {
     + '\n | | '
     + '\nX\'s turn.'
   expect(game.gameStateString()).equal(expectedGameStateString)
+
+  var game = ttt.newGameX()
+  expect(game.getPlayerMark()).equal(X)
+  expect(game.getAiMark()).equal(O)
+  expect(game.getWinner()).is.undefined
+  expect(game.getWinningRow()).is.undefined
+  expect(game.getOutcomeString()).is.undefined
+  expect(game.getGrid()).equal('fffffffff')
+  var expectedGameStateString = ' | | '
+    + '\n-----'
+    + '\n | | '
+    + '\n-----'
+    + '\n | | '
+    + '\nX\'s turn.'
+  expect(game.gameStateString()).equal(expectedGameStateString)
+
+  var game = ttt.newGameO()
+  expect(game.getPlayerMark()).equal(O)
+  expect(game.getAiMark()).equal(X)
+  expect(game.getWinner()).is.undefined
+  expect(game.getWinningRow()).is.undefined
+  expect(game.getOutcomeString()).is.undefined
+  expect(game.getGrid()).equal('xffffffff')
+  var expectedGameStateString = 'X| | '
+    + '\n-----'
+    + '\n | | '
+    + '\n-----'
+    + '\n | | '
+    + '\nO\'s turn.'
+  expect(game.gameStateString()).equal(expectedGameStateString)
+  game.chooseCell(4)
+  var grid = game.getGrid()
+  var counts = _.countBy(grid)
+  expect(counts.x).equal(2)
+  expect(counts.o).equal(1)
+  expect(counts.f).equal(6)
+
   console.log('TicTacToe - all tests passed.')
   return true
 }

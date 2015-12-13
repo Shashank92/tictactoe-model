@@ -45,7 +45,8 @@ function chooseCell(mark, grid, index) {
     winner = null
     outcomeString = 'The game is a draw...'
   } else {
-    return yieldToAi(mark, newGrid)
+    var aiMark = mark === X ? O : X
+    return yieldToAi(aiMark, newGrid)
   }
   return {
     grid: newGrid,

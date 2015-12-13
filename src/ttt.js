@@ -58,9 +58,12 @@ function newGame(playerMark) {
     return tttGame
   }
 
-  function advanceState(computeNextState) {
-    // broken ATM
-    var gameState = computeNextState(mark, grid)
+  function advanceState(index) {
+    var gameState
+    if (_.isNumber(index))
+      gameState = ops.chooseCell(playerMark, grid, index)
+    else
+      gameState = ops.yieldToAi(aiMark, grid)
     grid = gameState.grid
     winner = gameState.winner
     winningRow = gameState.winningRow
@@ -69,7 +72,7 @@ function newGame(playerMark) {
   }
 
   if (aiMark === X)
-    advanceState(ops.yieldToAi)
+    advanceState()
 
   var tttGame = {
     getPlayerMark: getPlayerMark,
@@ -80,7 +83,7 @@ function newGame(playerMark) {
     getOutcomeString: getOutcomeString,
     gameStateString: gameStateString,
     logGameState: logGameState,
-    chooseCell: _.partial(advanceState, ops.chooseCell)
+    chooseCell: advanceState,
   }
 
   return tttGame

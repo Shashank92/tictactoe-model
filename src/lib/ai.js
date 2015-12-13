@@ -24,8 +24,8 @@ function ai(mark, grid) {
     }
 
     // If your opponent can win, block them.
-    var opponentsMark = mark === X ? O : X
-    var cellsToBlock = D.waysToWin(opponentsMark, grid)
+    var playerMark = mark === X ? O : X
+    var cellsToBlock = D.waysToWin(playerMark, grid)
     if (cellsToBlock.length) {
       return _.first(cellsToBlock)
     }
@@ -41,11 +41,11 @@ function ai(mark, grid) {
 
     // Block opponent's chance to fork
     // Preferably as aggressively as possible.
-    var opponentsChildren = D.children(opponentsMark, grid)
-    var detectOpponentChildFork = _.partial(D.childIsFork, opponentsMark)
-    var opponentsForks = children.filter(detectOpponentChildFork)
-    if (opponentsForks.length) {
-      return _first(opponentsForks).path
+    var playerChildren = D.children(playerMark, grid)
+    var detectPlayerChildFork = _.partial(D.childIsFork, playerMark)
+    var playerForks = children.filter(detectPlayerChildFork)
+    if (playerForks.length) {
+      return _first(playerForks).path
     }
 
     if (~freeSpaces.indexOf(CENTER)) {
