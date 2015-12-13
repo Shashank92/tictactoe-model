@@ -1,6 +1,7 @@
 var expect = require('chai').expect
 var D = require('../src/lib/detect')
 var ops = require('../src/lib/operations')
+var ttt = require('../src/ttt')
 var _ = require('lodash')
 _.assign(global, require('../src/lib/constants'))
 
@@ -82,14 +83,31 @@ function testOperations(ops) {
   return true
 }
 
+function testTTT(ttt) {
+  var game = ttt.newGame()
+  expect(game.getGrid()).equal('fffffffff')
+  var expectedGameStateString = ' | | '
+    + '\n-----'
+    + '\n | | '
+    + '\n-----'
+    + '\n | | '
+    + '\nX\'s turn.'
+  expect(game.gameStateString()).equal(expectedGameStateString)
+  console.log('TicTacToe - all tests passed.')
+  return true
+}
+
 if (require.main === module) {
   testDetect(D)
   testOperations(ops)
+  testTTT(ttt)
 } else {
   module.exports = {
     D: D,
     ops: ops,
+    ttt: ttt,
     testDetect: testDetect,
     testOperations: testOperations,
+    testTTT: testTTT,
   }
 }

@@ -20,8 +20,8 @@ function allMarkedBy(mark, grid, row) {
 function freeSpaces(grid) {
   return _.reduce(grid, function(freeSpaces, cell, cellIndex) {
     return cell === FREE_SPACE
-            ? freeSpaces.concat(cellIndex)
-            : freeSpaces
+      ? freeSpaces.concat(cellIndex)
+      : freeSpaces
   }, [])
 }
 
@@ -52,21 +52,13 @@ function waysToWin(mark, grid) {
     })
   }
 
-  var filterMostlyMineRows = _.partial(_.filter, _, twoCellsAreMine)
-  var mapRowsToFreeSpace = _.partial(_.map, _, findFreeSpace)
-  var filterDefined = _.partial(_.filter, _, _.negate(_.isUndefined))
-  var sort = _.sortBy
-  var uniqSorted = _.partial(_.uniq, _, true)
-
-  var findAllWaysToWin = _.flow(
-    filterMostlyMineRows,
-    mapRowsToFreeSpace,
-    filterDefined,
-    sort,
-    uniqSorted
-  )
-
-  return findAllWaysToWin(ROWS)
+  return _(ROWS)
+    .filter(twoCellsAreMine)
+    .map(findFreeSpace)
+    .filter(_.negate(_.isUndefined))
+    .sortBy()
+    .uniq(true)
+    .value()
 }
 
 function children(mark, grid) {
@@ -74,8 +66,8 @@ function children(mark, grid) {
     return {
       path: freeSpace,
       grid: grid.substr(0, freeSpace)
-            + mark
-            + grid.substr(freeSpace + 1),
+        + mark
+        + grid.substr(freeSpace + 1),
     }
   })
 }

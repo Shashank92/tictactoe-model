@@ -40,17 +40,17 @@ function newGame(playerMark) {
 
   function gameStateString() {
     var footnote = outcomeString
-                    ? outcomeString
-                    : playerMark.toUpperCase() + "'s turn."
+      ? outcomeString
+      : playerMark.toUpperCase() + "'s turn."
     var gridString = grid.replace(/f/g, ' ').toUpperCase()
-    var mapToSeparated = _.partial(_.map, _, function(i) {
-      return _.toArray(gridString.substr(i, 3)).join('|')
-    })
-    var glueRows = function(strings) {
-      return strings.join('\n-----\n') + '\n' + footnote
-    }
-    var makeGameStateString = _.flow(mapToSeparated, glueRows)
-    return makeGameStateString(_.range(0, 9, 3))
+    return _(_.range(0, 9, 3))
+      .map(function(i) {
+        return _.toArray(gridString.substr(i, 3)).join('|')
+      })
+      .thru(function(strings) {
+        return strings.join('\n-----\n') + '\n' + footnote
+      })
+      .value()
   }
 
   function logGameState() {

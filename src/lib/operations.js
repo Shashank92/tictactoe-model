@@ -5,8 +5,8 @@ var FREE_SPACE = require('./constants').FREE_SPACE
 function markCell(mark, grid, index) {
   if (grid[index] === FREE_SPACE) {
     return grid.substr(0, index)
-            + mark
-            + grid.substr(index + 1)
+      + mark
+      + grid.substr(index + 1)
   } else {
     throw new Error('Attempting to mark an occupied or invalid cell.')
   }
