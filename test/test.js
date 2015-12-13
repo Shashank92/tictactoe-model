@@ -1,7 +1,8 @@
 var expect = require('chai').expect
 var D = require('../src/lib/detect')
 var ops = require('../src/lib/operations')
-Object.assign(global, require('../src/lib/constants'))
+var _ = require('lodash')
+_.assign(global, require('../src/lib/constants'))
 
 function testDetect(D) {
   //*
@@ -67,7 +68,7 @@ function testOperations(ops) {
     outcomeString: undefined,
   }
   expect(gameState).deep.equal(expectedGameState)
-  
+
   var gameState = ops.chooseCell(X, 'xxfffffff', 2)
   var expectedGameState = {
     grid: 'xxxffffff',

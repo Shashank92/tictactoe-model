@@ -1,6 +1,6 @@
 var _ = require('lodash')
 var D = require('./detect')
-Object.assign(global, require('./constants'))
+_.assign(global, require('./constants'))
 
 function ai(mark, grid) {
   var freeSpaces = D.freeSpaces(grid)

@@ -1,6 +1,7 @@
 var _ = require('lodash')
 var ops = require('./lib/operations')
-var FREE_SPACE = require('./lib/constants').FREE_SPACE
+var constants = require('./lib/constants')
+var FREE_SPACE = constants.FREE_SPACE
 var X = constants.X
 var O = constants.O
 
@@ -86,6 +87,6 @@ function newGame(playerMark) {
 
 module.exports = {
   newGame: newGame,
-  newGame: _.partial(newGame, X),
-  newGame: _.partial(newGame, O),
+  newGameX: _.partial(newGame, X),
+  newGameO: _.partial(newGame, O),
 }

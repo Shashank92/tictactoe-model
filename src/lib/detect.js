@@ -1,5 +1,5 @@
 var _ = require('lodash')
-Object.assign(global, require('./constants'))
+_.assign(global, require('./constants'))
 
 // Core Utility
 function markedBy(mark, grid, cellIndex) {
