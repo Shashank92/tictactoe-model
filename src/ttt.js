@@ -39,10 +39,10 @@ function newGame(playerMark) {
   }
 
   function gameStateString() {
+    var gridString = grid.replace(/f/g, ' ').toUpperCase()
     var footnote = outcomeString
       ? outcomeString
       : playerMark.toUpperCase() + "'s turn."
-    var gridString = grid.replace(/f/g, ' ').toUpperCase()
     return _(_.range(0, 9, 3))
       .map(function(i) {
         return _.toArray(gridString.substr(i, 3)).join('|')
