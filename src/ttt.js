@@ -43,7 +43,7 @@ function newGame(playerMark) {
                     ? outcomeString
                     : playerMark.toUpperCase() + "'s turn."
     var gridString = grid.replace(/f/g, ' ').toUpperCase()
-    var mapToSeparated = _.partial(_.map, function(i) {
+    var mapToSeparated = _.partial(_.map, _, function(i) {
       return _.toArray(gridString.substr(i, 3)).join('|')
     })
     var glueRows = function(strings) {
@@ -59,7 +59,8 @@ function newGame(playerMark) {
   }
 
   function advanceState(computeNextState) {
-    var gameState = computeNextState(aiMark, grid)
+    // broken ATM
+    var gameState = computeNextState(mark, grid)
     grid = gameState.grid
     winner = gameState.winner
     winningRow = gameState.winningRow
@@ -68,7 +69,7 @@ function newGame(playerMark) {
   }
 
   if (aiMark === X)
-    advanceState(operations.yieldToAi)
+    advanceState(ops.yieldToAi)
 
   var tttGame = {
     getPlayerMark: getPlayerMark,
@@ -79,7 +80,7 @@ function newGame(playerMark) {
     getOutcomeString: getOutcomeString,
     gameStateString: gameStateString,
     logGameState: logGameState,
-    chooseCell: _.partial(advanceState, operations.chooseCell)
+    chooseCell: _.partial(advanceState, ops.chooseCell)
   }
 
   return tttGame
