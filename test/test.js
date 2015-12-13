@@ -59,6 +59,15 @@ function testDetect(D) {
 }
 
 function testOperations(ops) {
+  var gameState = ops.yieldToAi(X, 'fffffffff')
+  var expectedGameState = {
+    grid: 'xffffffff',
+    winner: undefined,
+    winningRow: undefined,
+    outcomeString: undefined,
+  }
+  expect(gameState).deep.equal(expectedGameState)
+  
   var gameState = ops.chooseCell(X, 'xxfffffff', 2)
   var expectedGameState = {
     grid: 'xxxffffff',
@@ -66,8 +75,6 @@ function testOperations(ops) {
     winningRow: [0, 1, 2],
     outcomeString: 'X wins!',
   }
-  //console.log(gameState)
-  //console.log(expectedGameState)
   expect(gameState).deep.equal(expectedGameState)
 
   console.log('Operations - all tests passed.')
