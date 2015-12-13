@@ -48,7 +48,7 @@ function ai(mark, grid) {
       return _first(playerForks).path
     }
 
-    if (~freeSpaces.indexOf(CENTER)) {
+    if (_.includes(freeSpaces, CENTER)) {
       return CENTER
     }
     // Opposite corner: If the opponent is in the corner, 
