@@ -22,8 +22,8 @@ function logGameState() {
 }
 
 function TicTacToe(playerMark) {
-  this.playerMark = playerMark || X
-  this.aiMark = this.playerMark === X ? O : X
+  this.playerMark = playerMark = playerMark || X
+  this.aiMark = playerMark === X ? O : X
   this.grid = _.repeat(FREE_SPACE, 9)
   this.turn = X
   if (this.aiMark === X) {
