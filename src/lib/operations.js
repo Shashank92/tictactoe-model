@@ -13,9 +13,7 @@ function markCell(grid, mark, index) {
 }
 
 function yieldToAi(grid, mark) {
-  var winner
-  var winningRow
-  var outcomeString
+  var winner, winningRow, outcomeString
   var index = ai(grid, mark)
   var newGrid = markCell(grid, mark, index)
   if (winningRow = C.winningRow(newGrid, mark)) {
@@ -27,6 +25,7 @@ function yieldToAi(grid, mark) {
   }
   return {
     grid: newGrid,
+    turn: mark === X ? O : X,
     winner: winner,
     winningRow: winningRow,
     outcomeString: outcomeString,
@@ -34,9 +33,7 @@ function yieldToAi(grid, mark) {
 }
 
 function chooseCell(grid, mark, index) {
-  var winner
-  var winningRow
-  var outcomeString
+  var winner, winningRow, outcomeString
   var newGrid = markCell(grid, mark, index)
   if (winningRow = C.winningRow(newGrid, mark)) {
     winner = mark
@@ -50,6 +47,7 @@ function chooseCell(grid, mark, index) {
   }
   return {
     grid: newGrid,
+    turn: aiMark || mark === X ? O : X,
     winner: winner,
     winningRow: winningRow,
     outcomeString: outcomeString,

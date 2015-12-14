@@ -2,7 +2,7 @@ var expect = require('chai').expect
 var C = require('../src/lib/compute')
 var ops = require('../src/lib/operations')
 var ai = require('../src/lib/ai')
-var ttt = require('../src/ttt')
+var TicTacToe = require('../src/tictactoe')
 var _ = require('lodash')
 _.assign(global, require('../src/lib/constants'))
 
@@ -84,6 +84,7 @@ function testOperations(ops) {
   var gameState = ops.yieldToAi('fffffffff', X)
   var expectedGameState = {
     grid: 'xffffffff',
+    turn: O,
     winner: undefined,
     winningRow: undefined,
     outcomeString: undefined,
@@ -93,6 +94,7 @@ function testOperations(ops) {
   var gameState = ops.chooseCell('xxfffffff', X, 2)
   var expectedGameState = {
     grid: 'xxxffffff',
+    turn: O,
     winner: X,
     winningRow: [0, 1, 2],
     outcomeString: 'X wins!',
@@ -105,53 +107,53 @@ function testOperations(ops) {
 
 // ---------------------------------------------------------
 
-function testTTT(ttt) {
-  var game = ttt.newGame()
-  expect(game.getPlayerMark()).equal(X)
-  expect(game.getAiMark()).equal(O)
-  expect(game.getWinner()).is.undefined
-  expect(game.getWinningRow()).is.undefined
-  expect(game.getOutcomeString()).is.undefined
-  expect(game.getGrid()).equal('fffffffff')
+function testTicTacToe(TicTacToe) {
+  var ttt = new TicTacToe()
+  expect(ttt.playerMark).equal(X)
+  expect(ttt.aiMark).equal(O)
+  expect(ttt.winner).is.undefined
+  expect(ttt.winningRow).is.undefined
+  expect(ttt.outcomeString).is.undefined
+  expect(ttt.grid).equal('fffffffff')
   var expectedGameStateString = ' | | '
     + '\n-----'
     + '\n | | '
     + '\n-----'
     + '\n | | '
     + '\nX\'s turn.'
-  expect(game.gameStateString()).equal(expectedGameStateString)
+  expect(ttt.gameStateString).equal(expectedGameStateString)
 
-  var game = ttt.newGameX()
-  expect(game.getPlayerMark()).equal(X)
-  expect(game.getAiMark()).equal(O)
-  expect(game.getWinner()).is.undefined
-  expect(game.getWinningRow()).is.undefined
-  expect(game.getOutcomeString()).is.undefined
-  expect(game.getGrid()).equal('fffffffff')
+  ttt = new TicTacToe(X)
+  expect(ttt.playerMark).equal(X)
+  expect(ttt.aiMark).equal(O)
+  expect(ttt.winner).is.undefined
+  expect(ttt.winningRow).is.undefined
+  expect(ttt.outcomeString).is.undefined
+  expect(ttt.grid).equal('fffffffff')
   var expectedGameStateString = ' | | '
     + '\n-----'
     + '\n | | '
     + '\n-----'
     + '\n | | '
     + '\nX\'s turn.'
-  expect(game.gameStateString()).equal(expectedGameStateString)
+  expect(ttt.gameStateString).equal(expectedGameStateString)
 
-  var game = ttt.newGameO()
-  expect(game.getPlayerMark()).equal(O)
-  expect(game.getAiMark()).equal(X)
-  expect(game.getWinner()).is.undefined
-  expect(game.getWinningRow()).is.undefined
-  expect(game.getOutcomeString()).is.undefined
-  expect(game.getGrid()).equal('xffffffff')
+  var ttt = new TicTacToe(O)
+  expect(ttt.playerMark).equal(O)
+  expect(ttt.aiMark).equal(X)
+  expect(ttt.winner).is.undefined
+  expect(ttt.winningRow).is.undefined
+  expect(ttt.outcomeString).is.undefined
+  expect(ttt.grid).equal('xffffffff')
   var expectedGameStateString = 'X| | '
     + '\n-----'
     + '\n | | '
     + '\n-----'
     + '\n | | '
     + '\nO\'s turn.'
-  expect(game.gameStateString()).equal(expectedGameStateString)
-  game.chooseCell(4)
-  var grid = game.getGrid()
+  expect(ttt.gameStateString).equal(expectedGameStateString)
+  ttt.chooseCell(4)
+  var grid = ttt.grid
   var counts = _.countBy(grid)
   expect(counts.x).equal(2)
   expect(counts.o).equal(1)
@@ -167,16 +169,16 @@ if (require.main === module) {
   testCompute(C)
   testAi(ai)
   testOperations(ops)
-  testTTT(ttt)
+  testTicTacToe(TicTacToe)
 } else {
   module.exports = {
     C: C,
     ai: ai,
     ops: ops,
-    ttt: ttt,
+    TicTacToe: TicTacToe,
     testCompute: testCompute,
     testAi: testAi,
     testOperations: testOperations,
-    testTTT: testTTT,
+    testTicTacToe: testTicTacToe,
   }
 }
