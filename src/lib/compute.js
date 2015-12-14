@@ -102,10 +102,10 @@ var oppositeCorner = (function() {
 
 module.exports = {
   winningRow: winningRow,
+  waysToWin: waysToWin,
   freeSpaces: freeSpaces,
   isEmpty: isEmpty,
   isFull: isFull,
-  waysToWin: waysToWin,
   children: children,
   childIsFork: childIsFork,
   isCorner: isCorner,
