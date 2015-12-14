@@ -2,7 +2,7 @@ var ai = require('./ai')
 var C = require('./compute')
 var FREE_SPACE = require('./constants').FREE_SPACE
 
-function markCell(mark, grid, index) {
+function markCell(grid, mark, index) {
   if (grid[index] === FREE_SPACE) {
     return grid.substr(0, index)
       + mark
@@ -12,13 +12,13 @@ function markCell(mark, grid, index) {
   }
 }
 
-function yieldToAi(mark, grid) {
+function yieldToAi(grid, mark) {
   var winner
   var winningRow
   var outcomeString
-  var index = ai(mark, grid)
-  var newGrid = markCell(mark, grid, index)
-  if (winningRow = C.winningRow(mark, newGrid)) {
+  var index = ai(grid, mark)
+  var newGrid = markCell(grid, mark, index)
+  if (winningRow = C.winningRow(newGrid, mark)) {
     winner = mark
     outcomeString = winner.toUpperCase() + ' wins!'
   } else if (C.isFull(newGrid)) {
@@ -33,12 +33,12 @@ function yieldToAi(mark, grid) {
   }
 }
 
-function chooseCell(mark, grid, index) {
+function chooseCell(grid, mark, index) {
   var winner
   var winningRow
   var outcomeString
-  var newGrid = markCell(mark, grid, index)
-  if (winningRow = C.winningRow(mark, newGrid)) {
+  var newGrid = markCell(grid, mark, index)
+  if (winningRow = C.winningRow(newGrid, mark)) {
     winner = mark
     outcomeString = winner.toUpperCase() + ' wins!'
   } else if (C.isFull(newGrid)) {
@@ -46,7 +46,7 @@ function chooseCell(mark, grid, index) {
     outcomeString = 'The game is a draw...'
   } else {
     var aiMark = mark === X ? O : X
-    return yieldToAi(aiMark, newGrid)
+    return yieldToAi(newGrid, aiMark)
   }
   return {
     grid: newGrid,

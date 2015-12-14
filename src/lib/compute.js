@@ -2,21 +2,43 @@ var _ = require('lodash')
 _.assign(global, require('./constants'))
 
 // Core Utility
-function markedBy(mark, grid, cellIndex) {
+function markedBy(grid, mark, cellIndex) {
   return grid[cellIndex] === mark
 }
 
-function twoMarkedBy(mark, grid, row) {
-  var cellIsMine = _.partial(markedBy, mark, grid)
+function twoMarkedBy(grid, mark, row) {
+  var cellIsMine = _.partial(markedBy, grid, mark)
   return _.filter(row, cellIsMine).length === 2
 }
 
-function allMarkedBy(mark, grid, row) {
-  var cellIsMine = _.partial(markedBy, mark, grid)
+function allMarkedBy(grid, mark, row) {
+  var cellIsMine = _.partial(markedBy, grid, mark)
   return _.every(row, cellIsMine)
 }
 
 // Interface
+function winningRow(grid, mark) {
+  var allCellsAreMine = _.partial(allMarkedBy, grid, mark)
+  return _.find(ROWS, allCellsAreMine)
+}
+
+function waysToWin(grid, mark) {
+  var twoCellsAreMine = _.partial(twoMarkedBy, grid, mark)
+  var findFreeSpace = function(row) {
+    return _.find(row, function(cellIndex) {
+      return grid[cellIndex] === FREE_SPACE
+    })
+  }
+
+  return _(ROWS)
+    .filter(twoCellsAreMine)
+    .map(findFreeSpace)
+    .filter(_.isNumber)
+    .sortBy()
+    .uniq(true)
+    .value()
+}
+
 function freeSpaces(grid) {
   return _.reduce(grid, function(freeSpaces, cell, cellIndex) {
     return cell === FREE_SPACE
@@ -37,31 +59,7 @@ function isFull(grid) {
   })
 }
 
-function winningRow(mark, grid) {
-  var allCellsAreMine = _.partial(allMarkedBy, mark, grid)
-  return _.find(ROWS, allCellsAreMine)
-}
-
-
-
-function waysToWin(mark, grid) {
-  var twoCellsAreMine = _.partial(twoMarkedBy, mark, grid)
-  var findFreeSpace = function(row) {
-    return _.find(row, function(cellIndex) {
-      return grid[cellIndex] === FREE_SPACE
-    })
-  }
-
-  return _(ROWS)
-    .filter(twoCellsAreMine)
-    .map(findFreeSpace)
-    .filter(_.negate(_.isUndefined))
-    .sortBy()
-    .uniq(true)
-    .value()
-}
-
-function children(mark, grid) {
+function children(grid, mark) {
   return _.map(freeSpaces(grid), function(freeSpace) {
     return {
       path: freeSpace,
@@ -72,8 +70,8 @@ function children(mark, grid) {
   })
 }
 
-function childIsFork(mark, child) {
-  return waysToWin(mark, child.grid).length > 1
+function childIsFork(child, mark) {
+  return waysToWin(child.grid, mark).length > 1
 }
 
 function isCorner(index) {

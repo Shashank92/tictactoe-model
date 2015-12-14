@@ -61,9 +61,9 @@ function newGame(playerMark) {
   function advanceState(index) {
     var gameState
     if (_.isNumber(index))
-      gameState = ops.chooseCell(playerMark, grid, index)
+      gameState = ops.chooseCell(grid, playerMark, index)
     else
-      gameState = ops.yieldToAi(aiMark, grid)
+      gameState = ops.yieldToAi(grid, aiMark)
     grid = gameState.grid
     winner = gameState.winner
     winningRow = gameState.winningRow

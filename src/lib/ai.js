@@ -2,7 +2,7 @@ var _ = require('lodash')
 var C = require('./compute')
 _.assign(global, require('./constants'))
 
-function ai(mark, grid) {
+function ai(grid, mark) {
   var freeSpaces = C.freeSpaces(grid)
 
   function randomChoice(freeSpaces) {
@@ -18,21 +18,21 @@ function ai(mark, grid) {
       return 0
     } 
     // If there is a way to win, take it.
-    var waysToWin = C.waysToWin(mark, grid)
+    var waysToWin = C.waysToWin(grid, mark)
     if (waysToWin.length) {
       return _.first(waysToWin)
     }
 
     // If your opponent can win, block them.
     var playerMark = mark === X ? O : X
-    var cellsToBlock = C.waysToWin(playerMark, grid)
+    var cellsToBlock = C.waysToWin(grid, playerMark)
     if (cellsToBlock.length) {
       return _.first(cellsToBlock)
     }
 
     // Create fork if possible.
-    var children = C.children(mark, grid)
-    var isFork = _.partial(C.childIsFork, mark)
+    var children = C.children(grid, mark)
+    var isFork = _.partial(C.childIsFork, _, mark)
     var forks = _.filter(children, isFork)
     if (forks.length) {
       return _first(forks).path
@@ -40,8 +40,8 @@ function ai(mark, grid) {
 
     // Block opponent's chance to fork
     // Preferably as aggressively as possible.
-    var playerChildren = C.children(playerMark, grid)
-    var isPlayerFork = _.partial(C.childIsFork, playerMark)
+    var playerChildren = C.children(grid, playerMark)
+    var isPlayerFork = _.partial(C.childIsFork, _, playerMark)
     var playerForks = children.filter(isPlayerFork)
     if (playerForks.length) {
       return _first(playerForks).path
