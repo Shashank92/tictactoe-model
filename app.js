@@ -1,6 +1,6 @@
 global.lodash = require('lodash')
 lodash.assign(global, require('./src/lib/constants'))
 global.ai = require('./src/lib/ai')
-global.D = require('./src/lib/detect')
+global.C = require('./src/lib/compute')
 global.ops = require('./src/lib/operations')
 global.ttt = require('./src/ttt')

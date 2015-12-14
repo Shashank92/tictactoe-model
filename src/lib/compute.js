@@ -76,6 +76,32 @@ function childIsFork(mark, child) {
   return waysToWin(mark, child.grid).length > 1
 }
 
+function isCorner(index) {
+  return _.includes(CORNERS, index)
+}
+
+function cornersOwned(grid, mark) {
+  return _(grid)
+    .map(function(cell, cellIndex) {
+      return cell === mark ? cellIndex : undefined
+    })
+    .filter(_.isNumber)
+    .filter(isCorner)
+    .value()
+}
+
+var oppositeCorner = (function() {
+  var _oppositeCorner = {
+    0: 8,
+    2: 6,
+    6: 2,
+    8: 0,
+  }
+  return function oppositeCorner(index) {
+    return _oppositeCorner[index]
+  }
+})()
+
 module.exports = {
   winningRow: winningRow,
   freeSpaces: freeSpaces,
@@ -84,4 +110,7 @@ module.exports = {
   waysToWin: waysToWin,
   children: children,
   childIsFork: childIsFork,
+  isCorner: isCorner,
+  cornersOwned: cornersOwned,
+  oppositeCorner: oppositeCorner,
 }

@@ -1,9 +1,9 @@
 var _ = require('lodash')
-var D = require('./detect')
+var C = require('./compute')
 _.assign(global, require('./constants'))
 
 function ai(mark, grid) {
-  var freeSpaces = D.freeSpaces(grid)
+  var freeSpaces = C.freeSpaces(grid)
 
   function randomChoice(freeSpaces) {
     var randomIndex = Math.floor(Math.random() * freeSpaces.length)
@@ -13,47 +13,61 @@ function ai(mark, grid) {
   function bestChoice(freeSpaces) {
     // If X and first move, 
     // move top left corner to be as aggressive as possible.
-    var isEmpty = D.isEmpty(grid)
+    var isEmpty = C.isEmpty(grid)
     if (isEmpty) {
       return 0
     } 
     // If there is a way to win, take it.
-    var waysToWin = D.waysToWin(mark, grid)
+    var waysToWin = C.waysToWin(mark, grid)
     if (waysToWin.length) {
       return _.first(waysToWin)
     }
 
     // If your opponent can win, block them.
     var playerMark = mark === X ? O : X
-    var cellsToBlock = D.waysToWin(playerMark, grid)
+    var cellsToBlock = C.waysToWin(playerMark, grid)
     if (cellsToBlock.length) {
       return _.first(cellsToBlock)
     }
 
-    // Detect children that are forks
     // Create fork if possible.
-    var children = D.children(mark, grid)
-    var detectChildFork = _.partial(D.childIsFork, mark)
-    var forks = _.filter(children, detectChildFork)
+    var children = C.children(mark, grid)
+    var isFork = _.partial(C.childIsFork, mark)
+    var forks = _.filter(children, isFork)
     if (forks.length) {
       return _first(forks).path
     }
 
     // Block opponent's chance to fork
     // Preferably as aggressively as possible.
-    var playerChildren = D.children(playerMark, grid)
-    var detectPlayerChildFork = _.partial(D.childIsFork, playerMark)
-    var playerForks = children.filter(detectPlayerChildFork)
+    var playerChildren = C.children(playerMark, grid)
+    var isPlayerFork = _.partial(C.childIsFork, playerMark)
+    var playerForks = children.filter(isPlayerFork)
     if (playerForks.length) {
       return _first(playerForks).path
     }
 
+    // If center is free, and it's not the first move of the game,
+    // take it!!
     if (_.includes(freeSpaces, CENTER)) {
       return CENTER
     }
-    // Opposite corner: If the opponent is in the corner, 
+
+    // Opposite corner: If player is in the corner, 
     // play the opposite corner.
-    return randomChoice(freeSpaces)
+    var playerOwnedCorners = C.cornersOwned(grid, playerMark)
+    if (playerOwnedCorners.length) {
+      return C.oppositeCorner(_.first(playerOwnedCorners))
+    }
+
+    // Empty corner: The player plays in a corner square.
+    var freeCorner = _.find(freeSpaces, C.isCorner)
+    if (_.isNumber(freeCorner)) {
+      return freeCorner
+    }
+
+    // Return first empty side
+    return freeSpaces[0]
   }
 
   return bestChoice(freeSpaces)

@@ -15,10 +15,4 @@ module.exports = {
   CORNERS: [0, 2, 6, 8],
   EDGES: [1, 3, 5, 7],
   CENTER: 4,
-  OPPOSITE_CORNER: {
-    0: 8,
-    2: 6,
-    6: 2,
-    8: 0,
-  },
 }

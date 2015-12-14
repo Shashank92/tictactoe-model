@@ -1,62 +1,63 @@
 var expect = require('chai').expect
-var D = require('../src/lib/detect')
+var C = require('../src/lib/compute')
 var ops = require('../src/lib/operations')
+var ai = require('../src/lib/ai')
 var ttt = require('../src/ttt')
 var _ = require('lodash')
 _.assign(global, require('../src/lib/constants'))
 
-function testDetect(D) {
+function testCompute(C) {
   //*
   //***freeSpaces***
-  expect(D.freeSpaces('fffffffff')).deep.equal([0,1,2,3,4,5,6,7,8])
-  expect(D.freeSpaces('oofofofoo')).deep.equal([2, 4, 6])
-  expect(D.freeSpaces('fxxxfxxxf')).deep.equal([0, 4, 8])
+  expect(C.freeSpaces('fffffffff')).deep.equal([0,1,2,3,4,5,6,7,8])
+  expect(C.freeSpaces('oofofofoo')).deep.equal([2, 4, 6])
+  expect(C.freeSpaces('fxxxfxxxf')).deep.equal([0, 4, 8])
 
   
   // ***isEmpty/isFull***
-  expect(D.isEmpty('fffffffff')).equal(true)
-  expect(D.isEmpty('ffffxffff')).equal(false)
-  expect(D.isEmpty('ffffoffff')).equal(false)
-  expect(D.isFull('xxxxxxxxf')).equal(false)
-  expect(D.isFull('ooooooooo')).equal(true)
+  expect(C.isEmpty('fffffffff')).equal(true)
+  expect(C.isEmpty('ffffxffff')).equal(false)
+  expect(C.isEmpty('ffffoffff')).equal(false)
+  expect(C.isFull('xxxxxxxxf')).equal(false)
+  expect(C.isFull('ooooooooo')).equal(true)
 
   // ***winningRow***
 
   // Empty
-  expect(D.winningRow(X, 'fffffffff')).is.undefined
-  expect(D.winningRow(O, 'fffffffff')).is.undefined
+  expect(C.winningRow(X, 'fffffffff')).is.undefined
+  expect(C.winningRow(O, 'fffffffff')).is.undefined
 
   
   // Straight Line
-  expect(D.winningRow(X, 'xxxofooof')).deep.equal([0, 1, 2])
-  expect(D.winningRow(O, 'xxxooofff')).deep.equal([3, 4, 5])
+  expect(C.winningRow(X, 'xxxofooof')).deep.equal([0, 1, 2])
+  expect(C.winningRow(O, 'xxxooofff')).deep.equal([3, 4, 5])
   
-  // Diags
-  expect(D.winningRow(X, 'xoooxooox')).deep.equal([0, 4, 8])
+  // Ciags
+  expect(C.winningRow(X, 'xoooxooox')).deep.equal([0, 4, 8])
   
-  expect(D.winningRow(X, 'ooxoxoxoo')).deep.equal([2, 4, 6])
+  expect(C.winningRow(X, 'ooxoxoxoo')).deep.equal([2, 4, 6])
 
-  expect(D.winningRow(O, 'oxxxoxxxo')).deep.equal([0, 4, 8])
-  expect(D.winningRow(O, 'xxoxoxoxx')).deep.equal([2, 4, 6])
+  expect(C.winningRow(O, 'oxxxoxxxo')).deep.equal([0, 4, 8])
+  expect(C.winningRow(O, 'xxoxoxoxx')).deep.equal([2, 4, 6])
 
   // ***waysToWin***
-  expect(D.waysToWin(X, 'xfffffffx')).deep.equal([4])
-  expect(D.waysToWin(O, 'ffofffoff')).deep.equal([4])
-  expect(D.waysToWin(X, 'xfofffxfo')).deep.equal([3])
-  expect(D.waysToWin(O, 'xfofffxfo')).deep.equal([5])
-  expect(D.waysToWin(X, 'xfxfffxfx')).deep.equal([1, 3, 4, 5, 7])
+  expect(C.waysToWin(X, 'xfffffffx')).deep.equal([4])
+  expect(C.waysToWin(O, 'ffofffoff')).deep.equal([4])
+  expect(C.waysToWin(X, 'xfofffxfo')).deep.equal([3])
+  expect(C.waysToWin(O, 'xfofffxfo')).deep.equal([5])
+  expect(C.waysToWin(X, 'xfxfffxfx')).deep.equal([1, 3, 4, 5, 7])
 
   // ***children***
   var expected = [ { path: 7, grid: 'xxxxxxxxx' } ]
-  expect(D.children(X, 'xxxxxxxfx')).deep.equal(expected)
+  expect(C.children(X, 'xxxxxxxfx')).deep.equal(expected)
   expected = [ 
     { path: 0, grid: 'oooooooof' },
     { path: 8, grid: 'foooooooo' },
   ]
-  expect(D.children(O, 'fooooooof')).deep.equal(expected)
+  expect(C.children(O, 'fooooooof')).deep.equal(expected)
   //*/
 
-  console.log('Detect - all tests passed.')
+  console.log('Compute - all tests passed.')
   return true
 }
 
@@ -80,6 +81,16 @@ function testOperations(ops) {
   expect(gameState).deep.equal(expectedGameState)
 
   console.log('Operations - all tests passed.')
+  return true
+}
+
+function testAi(ai) {
+  expect(ai(X, 'fffffffff')).equal(0)
+  expect(ai(O, 'xffffffff')).equal(4)
+  expect(ai(O, 'ffffxffff')).equal(0)
+  expect(ai(X, 'offfxffff')).equal(8)
+
+  console.log('AI - all tests passed.')
   return true
 }
 
@@ -140,15 +151,17 @@ function testTTT(ttt) {
 }
 
 if (require.main === module) {
-  testDetect(D)
+  testCompute(C)
   testOperations(ops)
+  testAi(ai)
   testTTT(ttt)
 } else {
   module.exports = {
-    D: D,
+    C: C,
     ops: ops,
+    ai: ai,
     ttt: ttt,
-    testDetect: testDetect,
+    testCetect: testCetect,
     testOperations: testOperations,
     testTTT: testTTT,
   }
