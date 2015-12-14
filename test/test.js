@@ -34,6 +34,8 @@ function testCompute(C) {
   expect(C.waysToWin('xfofffxfo', X)).deep.equal([3])
   expect(C.waysToWin('xfofffxfo', O)).deep.equal([5])
   expect(C.waysToWin('xfxfffxfx', X)).deep.equal([1, 3, 4, 5, 7])
+  expect(C.waysToWin('xxoxooooo', X)).deep.equal([])
+  expect(C.waysToWin('ooxoxxxxx', O)).deep.equal([])
 
   //***freeSpaces***
   expect(C.freeSpaces('fffffffff')).deep.equal([0,1,2,3,4,5,6,7,8])
@@ -68,7 +70,7 @@ function testAi(ai) {
   expect(ai('fffffffff', X)).equal(0)
   expect(ai('xffffffff', O)).equal(4)
   expect(ai('ffffxffff', O)).equal(0)
-  expect(ai('offfxffff', X)).equal(8)
+  expect(ai('offfxffff', X)).equal(1)
 
   console.log('AI - all tests passed.')
   return true

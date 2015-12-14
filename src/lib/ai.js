@@ -33,18 +33,37 @@ function ai(grid, mark) {
     // Create fork if possible.
     var children = C.children(grid, mark)
     var isFork = _.partial(C.childIsFork, _, mark)
-    var forks = _.filter(children, isFork)
-    if (forks.length) {
-      return _first(forks).path
+    var forkPaths = _(children)
+      .filter(isFork)
+      .map(C.childPath)
+      .value()
+    if (forkPaths.length) {
+      return _first(forkPaths)
     }
 
     // Block opponent's chance to fork
-    // Preferably as aggressively as possible.
+    // It's preferable to force the opponent to defend if
+    // they cannot simultaneously defend and create a fork.
+    var childrenWithPressure = C.childrenWithPressure(children, mark)
     var playerChildren = C.children(grid, playerMark)
     var isPlayerFork = _.partial(C.childIsFork, _, playerMark)
-    var playerForks = _.filter(children, isPlayerFork)
-    if (playerForks.length) {
-      return _first(playerForks).path
+
+    var playerForkPaths = _(playerChildren)
+      .filter(isPlayerFork)
+      .map(C.childPath)
+      .value()
+
+    var pathsWithTruePressure = _(childrenWithPressure)
+      .filter(function(child) {
+        return _.difference(child.waysToWin, playerForkPaths).length
+      })
+      .map(C.childPath)
+      .value()
+
+    if (pathsWithTruePressure.length) {
+      return _.first(pathsWithTruePressure)
+    } else if (playerForkPaths.length) {
+      return _first(playerForkPaths)
     }
 
     // If center is free, and it's not the first move of the game,

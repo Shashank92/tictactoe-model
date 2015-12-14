@@ -74,6 +74,23 @@ function childIsFork(child, mark) {
   return waysToWin(child.grid, mark).length > 1
 }
 
+function childrenWithPressure(children, mark) {
+  return _(children)
+    .map(function(child) {
+      return _.assign({}, child, {
+        waysToWin: waysToWin(child.grid, mark)
+      })
+    })
+    .filter(function(child) {
+      return child.waysToWin.length
+    })
+    .value()
+}
+
+function childPath(child) {
+  return _.get(child, 'path')
+}
+
 function isCorner(index) {
   return _.includes(CORNERS, index)
 }
@@ -108,6 +125,8 @@ module.exports = {
   isFull: isFull,
   children: children,
   childIsFork: childIsFork,
+  childrenWithPressure: childrenWithPressure,
+  childPath: childPath,
   isCorner: isCorner,
   cornersOwned: cornersOwned,
   oppositeCorner: oppositeCorner,
