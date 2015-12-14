@@ -42,7 +42,7 @@ function ai(grid, mark) {
     // Preferably as aggressively as possible.
     var playerChildren = C.children(grid, playerMark)
     var isPlayerFork = _.partial(C.childIsFork, _, playerMark)
-    var playerForks = children.filter(isPlayerFork)
+    var playerForks = _.filter(children, isPlayerFork)
     if (playerForks.length) {
       return _first(playerForks).path
     }
