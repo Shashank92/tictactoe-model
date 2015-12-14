@@ -71,6 +71,8 @@ function testAi(ai) {
   expect(ai('xffffffff', O)).equal(4)
   expect(ai('ffffxffff', O)).equal(0)
   expect(ai('offfxffff', X)).equal(1)
+  expect(ai('ffxfofxff', O)).equal(1)
+  expect(ai('ffxxoffff', O)).equal(0)
 
   console.log('AI - all tests passed.')
   return true
