@@ -115,7 +115,7 @@ var oppositeCorner = (function() {
   return function oppositeCorner(index) {
     return _oppositeCorner[index]
   }
-})()
+}())
 
 module.exports = {
   winningRow: winningRow,
